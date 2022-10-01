@@ -4,37 +4,76 @@ import { push } from "connected-react-router";
 
 import * as actions from "../../store/actions";
 import './Login.scss';
-import { FormattedMessage } from 'react-intl'; 
+import { FormattedMessage } from 'react-intl';
 
 class Login extends Component {
     constructor(props) {
         super(props);
-        this.btnLogin = React.createRef();
+        this.state = {
+            username: 'phiho',
+            password: 'def',
+            isShowPassword: false,
+        }
+    }
+
+    handleOnChangeUsername = (event) => {
+        this.setState({
+            username: event.target.value,
+        })
+    }
+
+    handleOnChangePassword = (event) => {
+        this.setState({
+            password: event.target.value,
+        })
+    }
+
+    handleLogin = () => {
+        console.log('username: ', this.state.username, 'password: ', this.state.password);
+    }
+
+    handleShowHidePassword = () => { 
+        this.setState({
+            isShowPassword: !this.state.isShowPassword
+        })
     }
 
     render() {
+        // JSX
         return (
             <div className='login-background'>
-                <div className='login-container'> 
+                <div className='login-container'>
                     <div className='login-content row'>
                         <div className='col-12 text-login'>Login</div>
                         <div className='col-12 form-group login-input'>
                             <label>Username:</label>
-                            <input type='text' className='form-control' placeholder='Enter your username'/>
+                            <input type='text'
+                                className='form-control'
+                                placeholder='Enter your username'
+                                value={this.state.username}
+                                onChange={(event) => this.handleOnChangeUsername(event)} />
                         </div>
-                        <div className='col-12 form-group'>
+                        <div className='col-12 form-group login-input'>
                             <label>Password:</label>
-                            <input type='password' className='form-control' placeholder='Enter your password'/>
+                            <div className='custom-input-password'>
+                                <input type={this.state.isShowPassword ? 'text' : 'password'}
+                                    className='form-control'
+                                    placeholder='Enter your password'
+                                    onChange={(event) => this.handleOnChangePassword(event)} />
+                                <span onClick={() => {this.handleShowHidePassword()}}>
+                                    <i className={this.state.isShowPassword ? 'far fa-eye' : 'far fa-eye-slash'}></i>
+                                </span>
+                            </div>
                         </div>
                         <div className='col-12'>
-                            <button className='btn-login'>Login</button>
+                            <button className='btn-login' onClick={() => { this.handleLogin() }}>Login</button>
                         </div>
                         <div className='col-12'>
                             <span className='forgot-password'>Forgot your password?</span>
                         </div>
                         <span className='text-center'>Or Login with:</span>
                         <div className='col-12'>
-                            <div className='col-12 social-login'>                                
+                            <div className='col-12 social-login'>
                                 <i className="fab fa-google google"></i>
                                 <i className="fab fa-facebook-f facebook"></i>
                             </div>
