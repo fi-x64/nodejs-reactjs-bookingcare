@@ -54,7 +54,7 @@ class Login extends Component {
         const { adminLoginSuccess, adminLoginFail } = this.props;
         let loginBody = {
             username: 'admin',
-            password: '123456'
+            password: ''
         }
         //sucess
         let adminInfo = {
@@ -165,8 +165,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         navigate: (path) => dispatch(push(path)),
-        adminLoginSuccess: (adminInfo) => dispatch(actions.adminLoginSuccess(adminInfo)),
-        adminLoginFail: () => dispatch(actions.adminLoginFail()),
+        // adminLoginSuccess: (adminInfo) => dispatch(actions.adminLoginSuccess(adminInfo)),
+        // adminLoginFail: () => dispatch(actions.adminLoginFail()),
+        userLoginSuccess: () => dispatch(actions.userLoginSuccess(userInfor)),
     };
 };
 
