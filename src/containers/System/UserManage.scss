@@ -48,3 +48,44 @@
         opacity: 0.6;
     }
   }
+
+  .modal-user-container {
+    .modal-content {
+      .modal-header {
+        button {
+          background-color: transparent !important;
+          border: none;
+          color: white;
+          font-size: 27px;
+        }
+
+        button:hover {
+          opacity: 0.6;
+        }
+      }
+    }
+
+    .modal-user-body {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+
+      .input-container {
+        display: flex;
+        flex-direction: column;
+        width: 49%;
+
+        &.max-width-input {
+          width: 100%;
+        }
+
+        input {
+          border-radius: 3px;
+          border: 1px solid grey;
+          height: 30px;
+          outline: none;
+          padding: 0 10px;
+        }
+      }
+    }
+  }
