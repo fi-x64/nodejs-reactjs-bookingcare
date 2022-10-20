@@ -1,5 +1,4 @@
 import actionTypes from '../actions/actionTypes';
-import { getAllCodeService } from '../../services/userService';
 
 const initialState = {
     isLoadingGender: false,

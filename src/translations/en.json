@@ -46,7 +46,7 @@
         "password": "Password",
         "first-name": "First name",
         "last-name": "Last name",
-        "phone": "Phone number",
+        "phone-number": "Phone number",
         "address": "Address",
         "gender": "Gender",
         "position": "Position",
