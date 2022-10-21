@@ -6,8 +6,7 @@ import * as actions from '../../../store/actions'
 import './UserRedux.scss';
 import Lightbox from 'react-image-lightbox';
 import 'react-image-lightbox/style.css';
-import { createNewUser } from '../../../store/actions';
-
+import TableManageUser from './TableManageUser';
 class UserRedux extends Component {
 
     constructor(props) {
@@ -18,6 +17,17 @@ class UserRedux extends Component {
             roleArr: [],
             previewImgURL: '',
             isOpen: false,
+
+            email: '',
+            password: '',
+            firstName: '',
+            lastName: '',
+            address: '',
+            phonenumber: '',
+            gender: '',
+            image: '',
+            role: '',
+            position: '',
         }
     }
 
@@ -49,6 +59,21 @@ class UserRedux extends Component {
             this.setState({
                 positionArr: arrPositions,
                 position: arrPositions && arrPositions.length > 0 ? arrPositions[0].key : ''
+            })
+        }
+
+        if (prevProps.listUsers !== this.props.listUsers) {
+            this.setState({
+                email: '',
+                password: '',
+                firstName: '',
+                lastName: '',
+                address: '',
+                phonenumber: '',
+                gender: '',
+                image: '',
+                role: '',
+                position: '',
             })
         }
     }
@@ -91,13 +116,15 @@ class UserRedux extends Component {
             roleId: this.state.role,
             positionId: this.state.position,
         });
+
+        this.props.fetchUserRedux();
     }
 
     checkValidateInput = () => {
         let isValid = true;
         let arrCheck = ['email', 'password', 'firstName', 'lastName',
             'phonenumber', 'address', 'positionArr', 'roleArr', 'avatar'];
-        for (let i = 0; i < arrCheck.length; i++) {
+        for (let i = 0; i < arrCheck.length - 1; i++) {
             if (!this.state[arrCheck[i]]) {
                 isValid = false;
                 alert('This input is required: ' + arrCheck[i]);
@@ -136,49 +163,49 @@ class UserRedux extends Component {
                 </div>
                 <div className='user-redux-body'>
                     <div className='container'>
-                        <form className="row g-3">
+                        <div className="row g-3">
                             <div className="col-12 my-3"><FormattedMessage id="manage-user.add" /></div>
                             <div className="col-12 my-3">{isGetGenders === true ? 'Loading genders' : ''}</div>
 
                             <div className="col-md-6">
                                 <label className="form-label"><FormattedMessage id="manage-user.email" /></label>
                                 <input type="email" className="form-control"
-                                    value={email}
+                                    value={this.state.email}
                                     onChange={(event) => this.onChangeInput(event, 'email')}
                                 />
                             </div>
                             <div className="col-md-6">
                                 <label className="form-label"><FormattedMessage id="manage-user.password" /></label>
                                 <input type="password" className="form-control"
-                                    value={password}
+                                    value={this.state.password}
                                     onChange={(event) => this.onChangeInput(event, 'password')}
                                 />
                             </div>
                             <div className="col-md-6">
                                 <label className="form-label"><FormattedMessage id="manage-user.first-name" /></label>
                                 <input type="text" className="form-control"
-                                    value={firstName}
+                                    value={this.state.firstName}
                                     onChange={(event) => this.onChangeInput(event, 'firstName')}
                                 />
                             </div>
                             <div className="col-md-6">
                                 <label className="form-label"><FormattedMessage id="manage-user.last-name" /></label>
                                 <input type="text" className="form-control"
-                                    value={lastName}
+                                    value={this.state.lastName}
                                     onChange={(event) => this.onChangeInput(event, 'lastName')}
                                 />
                             </div>
                             <div className="col-md-6">
                                 <label className="form-label"><FormattedMessage id="manage-user.phone-number" /></label>
                                 <input type="text" className="form-control"
-                                    value={phonenumber}
+                                    value={this.state.phonenumber}
                                     onChange={(event) => this.onChangeInput(event, 'phonenumber')}
                                 />
                             </div>
                             <div className="col-md-6">
                                 <label className="form-label"><FormattedMessage id="manage-user.address" /></label>
                                 <input type="text" className="form-control"
-                                    value={address}
+                                    value={this.state.address}
                                     onChange={(event) => this.onChangeInput(event, 'address')}
                                 />
                             </div>
@@ -227,12 +254,15 @@ class UserRedux extends Component {
                                     </div>
                                 </div>
                             </div>
-                            <div className="col-12 mt-3">
-                                <div type="submit" className="btn btn-primary"
-                                    onClick={() => this.handleSaveUser()}>Save</div>
+                            <div className="col-12 my-3">
+                                <button className="btn btn-primary"
+                                    onClick={() => this.handleSaveUser()}><FormattedMessage id="manage-user.save" /></button>
                             </div>
-                        </form>
 
+                            <div className='col-12 mb-5'>
+                                <TableManageUser />
+                            </div>
+                        </div>
                     </div>
                 </div>
                 {this.state.isOpen === true &&
@@ -254,6 +284,7 @@ const mapStateToProps = state => {
         roleRedux: state.admin.roles,
         positionRedux: state.admin.positions,
         isLoadingGender: state.admin.isLoadingGender,
+        listUsers: state.admin.users,
     };
 };
 
@@ -263,8 +294,7 @@ const mapDispatchToProps = dispatch => {
         getPositionStart: () => dispatch(actions.fetchPositionStart()),
         getRoleStart: () => dispatch(actions.fetchRoleStart()),
         createNewUser: (data) => dispatch(actions.createNewUser(data)),
-        // processLogout: () => dispatch(actions.processLogout()),
-        // changeLanguageAppRedux: (language) => dispatch(actions.changeLanguageApp(language)),
+        fetchUserRedux: () => dispatch(actions.fetchAllUserStart())
     };
 };
 
