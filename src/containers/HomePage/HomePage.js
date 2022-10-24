@@ -20,7 +20,7 @@ class HomePage extends Component {
             arrows: true,
             autoplay: false,
             autoplaySpeed: 4500,
-            infinite: true,
+            infinite: false,
             pauseOnFocus: false,
             pauseOnHover: false,
             slidesToShow: 4,

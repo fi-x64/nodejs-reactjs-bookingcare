@@ -47,7 +47,7 @@ class UserRedux extends Component {
             let arrGenders = this.props.genderRedux
             this.setState({
                 genderArr: arrGenders,
-                gender: arrGenders && arrGenders.length > 0 ? arrGenders[0].key : ''
+                gender: arrGenders && arrGenders.length > 0 ? arrGenders[0].keyMap : ''
             })
         }
         if (prevProps.roleRedux !== this.props.roleRedux) {
@@ -55,7 +55,7 @@ class UserRedux extends Component {
 
             this.setState({
                 roleArr: arrRoles,
-                role: arrRoles && arrRoles.length > 0 ? arrRoles[0].key : ''
+                role: arrRoles && arrRoles.length > 0 ? arrRoles[0].keyMap : ''
             })
         }
         if (prevProps.positionRedux !== this.props.positionRedux) {
@@ -63,7 +63,7 @@ class UserRedux extends Component {
 
             this.setState({
                 positionArr: arrPositions,
-                position: arrPositions && arrPositions.length > 0 ? arrPositions[0].key : ''
+                position: arrPositions && arrPositions.length > 0 ? arrPositions[0].keyMap : ''
             })
         }
 
@@ -79,10 +79,10 @@ class UserRedux extends Component {
                 lastName: '',
                 address: '',
                 phonenumber: '',
-                gender: arrGenders && arrGenders.length > 0 ? arrGenders[0].key : '',
+                gender: arrGenders && arrGenders.length > 0 ? arrGenders[0].keyMap : '',
                 image: '',
-                role: arrRoles && arrRoles.length > 0 ? arrRoles[0].key : '',
-                position: arrPositions && arrPositions.length > 0 ? arrPositions[0].key : '',
+                role: arrRoles && arrRoles.length > 0 ? arrRoles[0].keyMap : '',
+                position: arrPositions && arrPositions.length > 0 ? arrPositions[0].keyMap : '',
                 action: CRUD_ACTIONS.CREATE,
                 previewImgURL: '',
             })
@@ -212,7 +212,7 @@ class UserRedux extends Component {
         let { email, password, firstName, lastName,
             phonenumber, address, position, gender, role, avatar
         } = this.state;
-
+        
         return (
             <div className='user-redux-container'>
                 <div className='title'>
@@ -273,7 +273,7 @@ class UserRedux extends Component {
                                 <select id="inputState" className="form-select" value={gender} onChange={(event) => this.onChangeInput(event, 'gender')} >
                                     {genders && genders.length > 0 && genders.map((item, index) => {
                                         return (
-                                            <option key={index} value={item.key}>
+                                            <option key={index} value={item.keyMap}>
                                                 {language === LANGUAGES.VI ? item.valueVi : item.valueEn}
                                             </option>
                                         )
@@ -285,7 +285,7 @@ class UserRedux extends Component {
                                 <select id="inputState" className="form-select" value={position} onChange={(event) => this.onChangeInput(event, 'position')}>
                                     {positions && positions.length > 0 && positions.map((item, index) => {
                                         return (
-                                            <option key={index} value={item.key}>{language === LANGUAGES.VI ? item.valueVi : item.valueEn}</option>
+                                            <option key={index} value={item.keyMap}>{language === LANGUAGES.VI ? item.valueVi : item.valueEn}</option>
                                         )
                                     })}
                                 </select>
@@ -295,7 +295,7 @@ class UserRedux extends Component {
                                 <select id="inputState" className="form-select" value={role} onChange={(event) => this.onChangeInput(event, 'role')}>
                                     {roles && roles.length > 0 && roles.map((item, index) => {
                                         return (
-                                            <option key={index} value={item.key}>{language === LANGUAGES.VI ? item.valueVi : item.valueEn}</option>
+                                            <option key={index} value={item.keyMap}>{language === LANGUAGES.VI ? item.valueVi : item.valueEn}</option>
                                         )
                                     })}
                                 </select>

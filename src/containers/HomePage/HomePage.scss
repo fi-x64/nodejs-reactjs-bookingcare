@@ -34,7 +34,7 @@
                 }
 
                 &.section-outstanding-doctor {
-                    background-image: url('../../assets/outstanding-doctor/doctor-check.jpg');
+                    // background-image: url('../../assets/outstanding-doctor/doctor-check.jpg');
                     width: 120px;
                     height: 120px;
                     border-radius: 50%;
@@ -137,6 +137,10 @@
     &:hover {
         background: #eceaea !important;
     }
+}
+
+.slick-disabled {
+    display: none !important;
 }
 
 .home-footer {
