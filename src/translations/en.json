@@ -82,7 +82,13 @@
             "select-doctor": "Select doctor",
             "intro": "Doctor introduction:",
             "create": "Create information",
-            "update": "Update information"
+            "update": "Update information",
+            "price": "Price of medical examination",
+            "payment": "Payment method",
+            "province": "Province",
+            "nameClinic": "Clinic's name",
+            "addressClinic": "Clinic's address",
+            "note": "Note"
         }
     }
 }
