@@ -110,8 +110,6 @@ class ManageSchedule extends Component {
             return;
         }
 
-        // let formattedDate = moment(currentDate).format(dateFormat.SEND_TO_SERVER);
-        // let formattedDate = moment(currentDate).unix();
         let formattedDate = new Date(currentDate).getTime();
 
         if (rangeTime && rangeTime.length > 0) {
@@ -128,17 +126,17 @@ class ManageSchedule extends Component {
                 toast.error("Invalid selected time!");
                 return;
             }
-            console.log("Check result: ", result);
             let res = await saveBulkScheduleDoctor({
                 arrSchedule: result,
                 doctorId: selectedDoctor.value,
                 formattedDate: formattedDate
             });
-
-            console.log('Check res saveBulkScheduleDoctor: ', res);
+            console.log('Check res: ', res);
+            if (res.errCode === 0) {
+                toast.success("Schedule saved!");
+            }
         }
 
-        console.log('Check result: ', result);
     }
 
     render() {
