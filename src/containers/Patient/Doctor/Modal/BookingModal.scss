@@ -1,6 +1,5 @@
 .booking-modal-container {
     .booking-modal-content {
-        height        : 500px;
         display       : flex;
         flex-direction: column;
 
@@ -15,11 +14,8 @@
             }
 
             .right {
-                float: right;
-
-                i {
-                    cursor: pointer;
-                }
+                float : right;
+                cursor: pointer;
             }
         }
 
