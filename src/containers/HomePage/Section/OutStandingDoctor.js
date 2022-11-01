@@ -35,7 +35,6 @@ class OutstandingDoctor extends Component {
 
     render() {
         let arrDoctors = this.state.arrDoctors;
-        console.log('Check arrDoctors: ', arrDoctors);
         let { language } = this.props;
         // arrDoctors = arrDoctors.concat(arrDoctors);
         return (

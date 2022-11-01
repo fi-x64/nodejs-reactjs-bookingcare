@@ -22,9 +22,13 @@
 
     .content-down {
         .short-infor {
-            span {
+            .detail {
                 cursor: pointer;
                 color : #45c3d2;
+            }
+
+            .currency {
+                margin: 0 5px;
             }
         }
 
@@ -44,8 +48,6 @@
                     float: right;
                 }
             }
-
-            .note {}
         }
 
         .payment {
