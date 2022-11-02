@@ -49,6 +49,7 @@ class DetailDoctor extends Component {
             nameVi = `${detailDoctor.positionData.valueVi}, ${detailDoctor.lastName} ${detailDoctor.firstName}`
             nameEn = `${detailDoctor.positionData.valueEn}, ${detailDoctor.firstName} ${detailDoctor.lastName}`
         }
+
         return (
             <>
                 <HomeHeader
@@ -57,7 +58,6 @@ class DetailDoctor extends Component {
                     <div className='intro-doctor'>
                         <div className='content-left'
                             style={{ backgroundImage: `url(${detailDoctor && detailDoctor.image ? detailDoctor.image : ''})` }}>
-
                         </div>
                         <div className='content-right'>
                             <div className='up'>
