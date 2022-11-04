@@ -20,8 +20,10 @@ class DefaultClass extends Component {
 
 
     render() {
-        <div>
-        </div>
+        return (
+            <div>
+            </div>
+        )
     }
 }
 
