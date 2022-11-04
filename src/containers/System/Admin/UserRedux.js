@@ -29,7 +29,7 @@ class UserRedux extends Component {
             role: '',
             position: '',
             avatar: '',
-            
+
             action: '',
 
             userEditId: '',
@@ -91,7 +91,6 @@ class UserRedux extends Component {
 
     handleOnChangeImage = async (event) => {
         let file = event.target.files[0];
-        console.log(file);
 
         if (file) {
             let base64 = await CommonUtils.getBase64(file);
@@ -212,7 +211,7 @@ class UserRedux extends Component {
         let { email, password, firstName, lastName,
             phonenumber, address, position, gender, role, avatar
         } = this.state;
-        
+
         return (
             <div className='user-redux-container'>
                 <div className='title'>
