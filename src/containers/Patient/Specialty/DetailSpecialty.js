@@ -6,7 +6,7 @@ import HomeHeader from '../../HomePage/HomeHeader';
 import DoctorSchedule from '../Doctor/DoctorSchedule';
 import DoctorExtraInfor from '../Doctor/DoctorExtraInfor';
 import ProfileDoctor from '../Doctor/ProfileDoctor';
-import { getAllDetailSpecialty, getAllCodeService } from '../../../services/userService';
+import { getSpecialtyById, getAllCodeService } from '../../../services/userService';
 import _ from 'lodash';
 import { LANGUAGES } from '../../../utils';
 
@@ -24,7 +24,7 @@ class DetailSpecialty extends Component {
         if (this.props.match && this.props.match.params && this.props.match.params.id) {
             let id = this.props.match.params.id;
 
-            let res = await getAllDetailSpecialty({
+            let res = await getSpecialtyById({
                 id: id,
                 location: 'ALL'
             });
@@ -43,10 +43,21 @@ class DetailSpecialty extends Component {
                     }
                 }
 
+                let dataProvince = resProvince.data;
+
+                if (dataProvince && dataProvince.length > 0) {
+                    dataProvince.unshift({
+                        createAt: null,
+                        keyMap: "ALL",
+                        type: "PROVINCE",
+                        valueEn: "ALL",
+                        valueVi: "Toàn quốc"
+                    });
+                }
                 this.setState({
                     dataDetailSpecialty: res.data,
                     arrDoctorId: arrDoctorId,
-                    listProvince: resProvince.data
+                    listProvince: dataProvince ? dataProvince : []
                 })
             }
         }
@@ -56,14 +67,38 @@ class DetailSpecialty extends Component {
 
     }
 
-    handleOnChangeSelect = (event) => {
-        console.log('Check onchange: ', event.target.value);
+    handleOnChangeSelect = async (event) => {
+        if (this.props.match && this.props.match.params && this.props.match.params.id) {
+            let id = this.props.match.params.id;
+            let location = event.target.value;
+
+            let res = await getSpecialtyById({
+                id: id,
+                location: location
+            });
+            if (res && res.errCode === 0) {
+                let data = res.data;
+                let arrDoctorId = [];
+                if (data && !_.isEmpty(res.data)) {
+                    let arr = data.doctorSpecialty;
+                    if (arr && arr.length > 0) {
+                        arr.map(item => {
+                            arrDoctorId.push(item.doctorId);
+                        })
+                    }
+                }
+                console.log('Check res: ', res);
+                this.setState({
+                    dataDetailSpecialty: res.data,
+                    arrDoctorId: arrDoctorId,
+                })
+            }
+        }
     }
 
 
     render() {
         let { arrDoctorId, dataDetailSpecialty, listProvince } = this.state;
-        console.log('Check state: ', this.state);
         let { language } = this.props;
 
         return (
@@ -80,7 +115,7 @@ class DetailSpecialty extends Component {
                             {listProvince && listProvince.length > 0 &&
                                 listProvince.map((item, index) => {
                                     return (
-                                        <option key={index}>
+                                        <option value={item.keyMap} key={index}>
                                             {language === LANGUAGES.VI ? item.valueVi : item.valueEn}
                                         </option>
                                     )
@@ -97,6 +132,8 @@ class DetailSpecialty extends Component {
                                             <ProfileDoctor
                                                 doctorId={item}
                                                 isShowDescriptionDoctor={true}
+                                                isShowLinkDetail={true}
+                                                isShowPrice={false}
                                             />
                                         </div>
                                     </div>
