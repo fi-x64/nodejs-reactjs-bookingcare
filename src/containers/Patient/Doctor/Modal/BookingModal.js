@@ -155,8 +155,6 @@ class BookingModal extends Component {
             doctorId = dataTime.doctorId;
         }
 
-        console.log('Check dataTime: ', dataTime);
-
         return (
             <div>
                 <Modal isOpen={isOpenModal} className={"booking-modal-container"}

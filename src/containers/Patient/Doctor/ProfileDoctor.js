@@ -94,7 +94,7 @@ class ProfileDoctor extends Component {
                                 </>
                                 :
                                 <>
-                                    {this.renderTimeBooking(dataTime)}
+                                    {dataTime ? this.renderTimeBooking(dataTime) : ''}
                                 </>
                             }
                         </div>
