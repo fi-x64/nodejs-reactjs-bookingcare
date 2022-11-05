@@ -32,7 +32,6 @@ class ProfileDoctor extends Component {
                 result = res.data;
             }
         }
-        console.log('Check result: ', result);
         return result;
     }
 
