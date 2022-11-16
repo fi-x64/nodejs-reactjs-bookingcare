@@ -73,6 +73,28 @@
                 }
             }
 
+            .user-tab {
+                display: flex;
+                gap    : 5px;
+
+                .division {
+                    border: 1px solid #000;
+                }
+
+                .sign-in {
+                    cursor         : pointer;
+                    color          : #000;
+                    text-decoration: none;
+                }
+
+                .sign-up {
+                    cursor         : pointer;
+                    margin-right   : 20px;
+                    color          : #000;
+                    text-decoration: none;
+                }
+            }
+
             .language-vi {
                 cursor : pointer;
                 opacity: 0.2;

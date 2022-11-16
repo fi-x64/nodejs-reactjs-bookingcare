@@ -1,7 +1,11 @@
 import axios from '../axios'
-
+import authHeader from './auth-header';
 const handleLoginApi = (userEmail, userPassword) => {
-    return axios.post('/api/login', { email: userEmail, password: userPassword });
+    return axios.post('/api/login', { email: userEmail, password: userPassword })
+}
+
+const handleRegisterApi = (data) => {
+    return axios.post('/api/register', data)
 }
 
 const getAllUsers = (inputId) => {
@@ -99,7 +103,8 @@ const postSendRemedy = (data) => {
 }
 
 export {
-    handleLoginApi, getAllUsers,
+    handleLoginApi, handleRegisterApi,
+    getAllUsers,
     createNewUserService, editUserService,
     deleteUserService, getAllCodeService,
     getTopDoctorHomeService, getAllDoctorsService,

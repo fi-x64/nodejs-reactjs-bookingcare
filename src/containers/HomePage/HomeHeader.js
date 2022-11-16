@@ -7,8 +7,13 @@ import InputComponent from '../../hoc/IntlPlaceholder';
 import { LANGUAGES } from '../../utils';
 import { changeLanguageApp } from '../../store/actions';
 import { withRouter } from "react-router"
+import DropdownComponent from './DropdownComponent';
 
 class HomeHeader extends Component {
+
+    componentDidMount() {
+        let { userInfo } = this.props;
+    }
 
     changeLanguage = (language) => {
         this.props.changeLanguageAppRedux(language);
@@ -22,7 +27,7 @@ class HomeHeader extends Component {
     }
 
     render() {
-        let language = this.props.language;
+        const { processLogout, language, userInfo } = this.props;
         return (
             <React.Fragment>
                 <div className='home-header-container'>
@@ -52,6 +57,13 @@ class HomeHeader extends Component {
                         </div>
                         <div className='right-content'>
                             <div className='support'><i className='fas fa-question-circle'></i> <FormattedMessage id="homeheader.support" /></div>
+                            {userInfo ? <DropdownComponent /> :
+                                <div className='user-tab'>
+                                    <a href="/login" className='sign-in'>Đăng nhập</a>
+                                    <div className='division'></div>
+                                    <a href="/register" className='sign-up'>Đăng ký</a>
+                                </div>
+                            }
                             <div className={language === LANGUAGES.VI ? 'language-vi active' : 'language-vi'}><span onClick={() => { this.changeLanguage(LANGUAGES.VI) }}>VN</span></div>
                             <div className={language === LANGUAGES.EN ? 'language-en active' : 'language-en'}><span onClick={() => { this.changeLanguage(LANGUAGES.EN) }}>EN</span> </div>
                         </div>

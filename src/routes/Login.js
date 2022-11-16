@@ -42,11 +42,17 @@ class Login extends Component {
         this.setState({ password: e.target.value })
     }
 
-    redirectToSystemPage = () => {
+    redirectToHomePage = () => {
         const { navigate } = this.props;
-        const redirectPath = '/system/user-manage';
+        const redirectPath = '/';
         navigate(`${redirectPath}`);
     }
+
+    // redirectToSystemPage = () => {
+    //     const { navigate } = this.props;
+    //     const redirectPath = '/system/user-manage';
+    //     navigate(`${redirectPath}`);
+    // }
 
     processLogin = () => {
         const { username, password } = this.state;
@@ -66,7 +72,7 @@ class Login extends Component {
 
         adminLoginSuccess(adminInfo);
         this.refresh();
-        this.redirectToSystemPage();
+        this.redirectToHomePage();
         try {
             adminService.login(loginBody)
         } catch (e) {

@@ -1,0 +1,11 @@
+.dropdown-custom {
+    transform: translateX(-5%) !important;
+    position : relative;
+
+    .dropdown-list {
+        position        : absolute;
+        display         : block;
+        background-color: white;
+        top             : 100%;
+    }
+}

@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { push } from "connected-react-router";
-
 import * as actions from "../../store/actions";
 import './Login.scss';
 // import { FormattedMessage } from 'react-intl';
 import { handleLoginApi } from '../../services/userService';
+import FacebookLogin from 'react-facebook-login';
 
 class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: 'phiho',
-            password: 'def',
+            username: '',
+            password: '',
             isShowPassword: false,
             errMessage: ''
         }
@@ -37,13 +37,17 @@ class Login extends Component {
 
         try {
             let data = await handleLoginApi(this.state.username, this.state.password);
+
             if (data && data.errCode !== 0) {
                 this.setState({
                     errMessage: data.message
                 })
             };
             if (data && data.errCode === 0) {
-                this.props.userLoginSuccess(data.user);
+                if (data.accessToken) {
+                    localStorage.setItem("user", JSON.stringify(data));
+                    this.props.userLoginSuccess(data.user);
+                }
             }
         } catch (error) {
             if (error.response) {
@@ -68,6 +72,14 @@ class Login extends Component {
         }
     }
 
+    letcomponentClicked = () => {
+        console.log('Clicked');
+    }
+
+    responseFacebook = (response) => {
+        console.log(response);
+    }
+
     render() {
         // JSX
         return (
@@ -76,10 +88,10 @@ class Login extends Component {
                     <div className='login-content row'>
                         <div className='col-12 text-login'>Login</div>
                         <div className='col-12 form-group login-input'>
-                            <label>Username:</label>
+                            <label>Email:</label>
                             <input type='text'
                                 className='form-control'
-                                placeholder='Enter your username'
+                                placeholder='Enter your email'
                                 value={this.state.username}
                                 onChange={(event) => this.handleOnChangeUsername(event)}
                                 onKeyDown={(event) => this.handleKeyDown(event)} />
