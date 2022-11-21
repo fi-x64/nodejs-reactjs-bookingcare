@@ -19,6 +19,10 @@ import VerifyEmail from './Patient/VerifyEmail';
 import DetailSpecialty from './Patient/Specialty/DetailSpecialty';
 import DetailClinic from '../containers/Patient/Clinic/DetailClinic';
 import Register from './Auth/Register';
+import ListAllClinic from './Patient/Clinic/ListAllClinic';
+import ListAllDoctor from './Patient/Doctor/ListAllDoctor';
+import ListAllSpecialty from './Patient/Specialty/ListAllSpecialty';
+import UserInfo from './Patient/UserInfo';
 
 class App extends Component {
 
@@ -54,11 +58,15 @@ class App extends Component {
                                     <Route path={path.REGISTER} component={Register} />
                                     <Route path={path.SYSTEM} component={userIsAuthenticated(System)} />
                                     <Route path={'/doctor/'} component={userIsAuthenticated(Doctor)} />
+                                    <Route path={path.USER_INFO} component={UserInfo} />
 
                                     <Route path={path.HOMEPAGE} component={HomePage} />
                                     <Route path={path.DETAIL_DOCTOR} component={DetailDoctor} />
                                     <Route path={path.DETAIL_SPECIALTY} component={DetailSpecialty} />
                                     <Route path={path.DETAIL_CLINIC} component={DetailClinic} />
+                                    <Route path={path.LIST_ALL_CLINIC} component={ListAllClinic} />
+                                    <Route path={path.LIST_ALL_DOCTOR} component={ListAllDoctor} />
+                                    <Route path={path.LIST_ALL_SPECIALTY} component={ListAllSpecialty} />
 
                                     <Route path={path.VERIFY_EMAIL_BOOKING} component={VerifyEmail} />
                                 </Switch>

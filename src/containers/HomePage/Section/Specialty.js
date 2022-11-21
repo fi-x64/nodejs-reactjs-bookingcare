@@ -16,7 +16,6 @@ class Specialty extends Component {
 
     async componentDidMount() {
         let res = await getAllSpecialty();
-        console.log('Check response: ', res);
         if (res && res.errCode === 0) {
             this.setState({
                 dataSpecialty: res.data
@@ -30,6 +29,12 @@ class Specialty extends Component {
         }
     }
 
+    handleViewAllSpecialty = () => {
+        if (this.props.history) {
+            this.props.history.push(`/list-all-clinic`)
+        }
+    }
+
     render() {
         let { dataSpecialty } = this.state;
 
@@ -38,7 +43,9 @@ class Specialty extends Component {
                 <div className='section-container'>
                     <div className='section-header'>
                         <span className='title-section'><FormattedMessage id="homepage.specialty-popular" /></span>
-                        <button className='btn-section'><FormattedMessage id="homepage.more-infor" /></button>
+                        <button className='btn-section' onClick={this.handleViewAllSpecialty}>
+                            <FormattedMessage id="homepage.more-infor" />
+                        </button>
                     </div>
 
                     <div className='section-body'>

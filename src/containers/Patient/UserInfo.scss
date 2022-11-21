@@ -1,0 +1,27 @@
+.preview-img-container {
+    display        : flex;
+    align-items    : center;
+    justify-content: center;
+
+    .label-upload {
+        padding      : 5px;
+        border-radius: 3px;
+        background   : #ddd;
+        cursor       : pointer;
+        margin-left  : 20px;
+
+        &:hover {
+            opacity: 0.9;
+        }
+    }
+
+    .preview-img {
+        height         : 240px;
+        width          : 240px;
+        border         : 1px solid #ddd;
+        background     : center center no-repeat;
+        background-size: contain;
+        cursor         : pointer;
+        border-radius  : 50%;
+    }
+}

@@ -4,6 +4,10 @@ const handleLoginApi = (userEmail, userPassword) => {
     return axios.post('/api/login', { email: userEmail, password: userPassword })
 }
 
+const handleGoogleLoginApi = (googleResponse) => {
+    return axios.post('/api/google-login', { googleResponse })
+}
+
 const handleRegisterApi = (data) => {
     return axios.post('/api/register', data)
 }
@@ -24,6 +28,10 @@ const deleteUserService = (userId) => {
 
 const editUserService = (inputData) => {
     return axios.put('/api/edit-user', inputData);
+}
+
+const updateUserInfo = (inputData) => {
+    return axios.post('/api/update-user-info', inputData);
 }
 
 const getAllCodeService = (inputType) => {
@@ -102,6 +110,14 @@ const postSendRemedy = (data) => {
     return axios.post(`/api/send-remedy`, data);
 }
 
+const searchData = (searchData) => {
+    return axios.get(`/api/search?search_query=${searchData}`);
+}
+
+const getAllGender = () => {
+    return axios.get(`/api/get-all-gender`);
+}
+
 export {
     handleLoginApi, handleRegisterApi,
     getAllUsers,
@@ -115,5 +131,7 @@ export {
     createNewSpecialty, getAllSpecialty,
     getSpecialtyById, createNewClinic,
     getAllClinic, getDetailClinicById,
-    getAllPatientForDoctor, postSendRemedy
+    getAllPatientForDoctor, postSendRemedy,
+    handleGoogleLoginApi, searchData,
+    getAllGender, updateUserInfo
 };

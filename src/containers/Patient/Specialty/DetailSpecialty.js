@@ -87,7 +87,7 @@ class DetailSpecialty extends Component {
                         })
                     }
                 }
-                console.log('Check res: ', res);
+
                 this.setState({
                     dataDetailSpecialty: res.data,
                     arrDoctorId: arrDoctorId,

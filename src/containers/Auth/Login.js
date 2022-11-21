@@ -4,8 +4,11 @@ import { push } from "connected-react-router";
 import * as actions from "../../store/actions";
 import './Login.scss';
 // import { FormattedMessage } from 'react-intl';
-import { handleLoginApi } from '../../services/userService';
+import { handleLoginApi, handleGoogleLoginApi } from '../../services/userService';
+import GoogleLogin from 'react-google-login';
 import FacebookLogin from 'react-facebook-login';
+import { gapi } from 'gapi-script';
+import { googleKeys } from '../../utils/keys';
 
 class Login extends Component {
     constructor(props) {
@@ -14,9 +17,11 @@ class Login extends Component {
             username: '',
             password: '',
             isShowPassword: false,
-            errMessage: ''
+            errMessage: '',
         }
     }
+
+    clientId = '33837392563-1pujuhbnqf9enc95nb7hotlg9qhr81jj.apps.googleusercontent.com'
 
     handleOnChangeUsername = (event) => {
         this.setState({
@@ -32,7 +37,7 @@ class Login extends Component {
 
     handleLogin = async () => {
         this.setState({
-            errMessage: ''
+            errMessage: '',
         })
 
         try {
@@ -72,11 +77,48 @@ class Login extends Component {
         }
     }
 
-    letcomponentClicked = () => {
-        console.log('Clicked');
+    gapiInit() {
+        const initClient = () => {
+            gapi.client.init({
+                clientId: this.clientId,
+                scope: ''
+            });
+        };
+        gapi.load('client:auth2', initClient);
     }
 
-    responseFacebook = (response) => {
+    successGoogle = async (response) => {
+        this.gapiInit();
+
+        this.setState({
+            errMessage: '',
+        })
+
+        try {
+            let data = await handleGoogleLoginApi(response);
+            if (data && data.errCode !== 0) {
+                this.setState({
+                    errMessage: data.message
+                })
+            };
+            if (data && data.errCode === 0) {
+                if (data.accessToken) {
+                    localStorage.setItem("user", JSON.stringify(data));
+                    this.props.userLoginSuccess(data.user);
+                }
+            }
+        } catch (error) {
+            if (error.response) {
+                if (error.response.data) {
+                    this.setState({
+                        errMessage: error.response.data.message
+                    })
+                }
+            }
+        }
+    }
+
+    failGoogle = (response) => {
         console.log(response);
     }
 
@@ -119,10 +161,29 @@ class Login extends Component {
                             <span className='forgot-password'>Forgot your password?</span>
                         </div>
                         <span className='text-center'>Or Login with:</span>
-                        <div className='col-12'>
-                            <div className='col-12 social-login'>
-                                <i className="fab fa-google google"></i>
-                                <i className="fab fa-facebook-f facebook"></i>
+                        <div className='col-12 social-login'>
+
+                            <div className='google-custom'>
+                                <GoogleLogin
+                                    clientId={this.clientId}
+                                    buttonText="Login with Google"
+                                    onSuccess={this.successGoogle}
+                                    onFailure={this.failGoogle}
+                                    cookiePolicy={'single_host_origin'}
+                                    isSignedIn={false}
+                                />
+                            </div>
+                        </div>
+                        <div className='col-12 social-login'>
+                            <div>
+                                <FacebookLogin
+                                    appId=""
+                                    autoLoad={false}
+                                    fields="name,email,picture"
+                                    callback={this.responseFacebook}
+                                    cssClass="facebook-custom"
+                                    icon="fa-facebook"
+                                />
                             </div>
                         </div>
                     </div>

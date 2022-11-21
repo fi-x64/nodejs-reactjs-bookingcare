@@ -3,6 +3,8 @@ import { FormattedMessage } from 'react-intl';
 import './DropdownComponent.scss';
 import { connect } from 'react-redux';
 import * as actions from "../../store/actions";
+import { gapi } from 'gapi-script';
+import { googleKeys } from '../../utils/keys';
 
 class DropdownComponent extends Component {
     constructor(props) {
@@ -41,17 +43,17 @@ class DropdownComponent extends Component {
         let { isOpen } = this.state;
 
         return (
-            <div class="dropdown-custom" onClick={this.handleDropdown} ref={this.wrapperRef}>
-                <a class="btn btn-warning dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <div className="dropdown-custom" onClick={this.handleDropdown} ref={this.wrapperRef}>
+                <a className="btn btn-warning dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <FormattedMessage id="homeheader.welcome" />, {userInfo && userInfo.firstName ? userInfo.firstName : ''}
                 </a>
 
-                {isOpen ? <div class="dropdown-list" aria-labelledby="dropdownMenuLink">
-                    <a class="dropdown-item" href="#">Thông tin tài khoản</a>
-                    <a class="dropdown-item" href="#">Đổi mật khẩu</a>
-                    <a class="dropdown-item" href="#" onClick={processLogout}>Đăng xuất</a>
-                    {userInfo.roleId === 'R1' ? <a class="dropdown-item" href="/system/user-manage">Chuyển sang trang Admin</a> : null}
-                    {userInfo.roleId === 'R2' ? <a class="dropdown-item" href="/system/user-manage">Chuyển sang trang Quản lý bác sĩ</a> : null}
+                {isOpen ? <div className="dropdown-list" aria-labelledby="dropdownMenuLink">
+                    <a className="dropdown-item" href="/user-info/">Thông tin tài khoản</a>
+                    <a className="dropdown-item" href="#">Đổi mật khẩu</a>
+                    <a className="dropdown-item" href="#" onClick={processLogout}>Đăng xuất</a>
+                    {userInfo.roleId === 'R1' ? <a className="dropdown-item" href="/system/user-manage">Chuyển sang trang Admin</a> : null}
+                    {userInfo.roleId === 'R2' ? <a className="dropdown-item" href="/system/user-manage">Chuyển sang trang Quản lý bác sĩ</a> : null}
                 </div> : null}
 
             </div>

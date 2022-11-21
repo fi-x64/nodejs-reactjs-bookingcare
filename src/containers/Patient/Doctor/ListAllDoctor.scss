@@ -1,0 +1,63 @@
+.title {
+    margin-bottom: 20px;
+}
+
+.section-customize {
+    margin      : auto;
+    cursor      : pointer;
+    width       : 260px;
+    padding-left: 40px;
+
+    .bg-image-list {
+        width              : 260px;
+        height             : 260px;
+        border-radius      : 50%;
+        background-position: center center;
+        background-repeat  : no-repeat;
+        background-size    : cover;
+        background-color   : #eee;
+
+        .clinic-child {
+            cursor: pointer;
+
+            .clinic-name {
+                padding: 10px 0;
+            }
+
+            &:hover {
+                color: #45c3d2;
+            }
+        }
+    }
+
+    .clinic-name-list {
+        margin-top   : 20px;
+        margin-bottom: 20px;
+        margin-left  : 40px;
+    }
+}
+
+.pagination {
+    display        : flex;
+    align-items    : center;
+    justify-content: center;
+
+    .selected {
+        background-color: #ffc107;
+        color           : white;
+        border          : 1px solid #ffc107;
+    }
+
+    a {
+        color          : black;
+        float          : left;
+        padding        : 8px 16px;
+        text-decoration: none;
+        transition     : background-color .3s;
+        border         : 1px solid #ddd;
+
+        &:hover:not(.active) {
+            background-color: #ffc107;
+        }
+    }
+}

@@ -146,6 +146,7 @@
         background-image: linear-gradient(rgba(0, 0, 0, 0.25), rgba(255, 255, 255, 0.1));
         padding-top     : 15px;
         height          : 65%;
+        z-index         : 100;
 
         .title1 {
             text-align      : center;
@@ -189,6 +190,28 @@
                 background: transparent;
                 border    : none;
                 outline   : none;
+            }
+
+            .dataResult {
+                .dataHeader {
+                    color    : #448cfb;
+                    font-size: 20px;
+                }
+
+                .dataItem {
+                    text-decoration: none;
+                    color          : #000;
+                    font-size      : 15px;
+                    cursor         : pointer;
+                }
+
+                .dataItem:hover {
+                    opacity: 0.8;
+
+                    p {
+                        background-color: #448cfb;
+                    }
+                }
             }
         }
     }

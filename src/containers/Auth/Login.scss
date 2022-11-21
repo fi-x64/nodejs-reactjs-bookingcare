@@ -1,27 +1,27 @@
 .login-background {
-    height: 100vh;
+    height    : 100vh;
     background: linear-gradient(135deg, rgba(34, 193, 195, 1) 0%, rgba(253, 187, 45, 1) 100%);
-    
+
     .login-container {
-        position: absolute;
-        max-height: 450px;
-        width: 40%;
-        height: 60%;
-        margin: auto;
-        border-radius: 10px;
+        position        : absolute;
+        max-height      : 400px;
+        width           : 40%;
+        height          : 45%;
+        margin          : auto;
+        border-radius   : 10px;
         background-color: white;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
+        top             : 0;
+        bottom          : 0;
+        left            : 0;
+        right           : 0;
 
         .login-content {
             padding: 10px;
-            
+
             .text-login {
-                text-align: center;
+                text-align : center;
                 font-weight: 600;
-                font-size: 24px;
+                font-size  : 24px;
                 padding-top: 10px;
             }
 
@@ -30,25 +30,26 @@
 
                 .custom-input-password {
                     position: relative;
+
                     i {
                         position: absolute;
-                        right: 7px;
-                        top: 11px;
-                        cursor: pointer;
+                        right   : 7px;
+                        top     : 11px;
+                        cursor  : pointer;
                     }
                 }
             }
 
             .btn-login {
-                width: 100%;
-                margin: 10px 0;
-                height: 30px;
+                width        : 100%;
+                margin       : 10px 0;
+                height       : 30px;
                 border-radius: 15px;
-                outline: none;
-                border: none;
-                color: white;
-                font-size: 16px;
-                background: linear-gradient(135deg, rgba(34, 193, 195, 1) 0%, rgba(253, 187, 45, 1) 100%);
+                outline      : none;
+                border       : none;
+                color        : white;
+                font-size    : 16px;
+                background   : linear-gradient(135deg, rgba(34, 193, 195, 1) 0%, rgba(253, 187, 45, 1) 100%);
             }
 
             .btn-login:hover {
@@ -59,35 +60,35 @@
                 font-size: 12px;
             }
 
+
+
             .social-login {
-                display: flex;
-                text-align: center;
-                justify-content: center;
-                margin-top: 10px;
-                
-                .google {
-                    font-size: 30px;
-                    background: #c32434;
-                    border-radius: 50%;
-                    height: 50px;
-                    width: 50px;
-                    display: flex;
-                    align-items: center;
+                // display        : block;
+                // text-align     : center;
+                // justify-content: center;
+                // margin-top     : 10px;
+
+                .google-custom {
+                    border-radius  : 50%;
+                    width          : 180px;
+                    align-items    : center;
                     justify-content: center;
-                    color: white;
-                    margin-right: 10px;
+
                 }
 
-                .facebook {
-                    font-size: 30px;
-                    background: #307aff;
-                    border-radius: 50%;
-                    height: 50px;
-                    width: 50px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    color: white;
+                .facebook-custom {
+                    i {
+                        color       : #4267B2;
+                        margin-right: 10px;
+                    }
+
+                    outline         : none;
+                    border-color    : #b7b7b7;
+                    background-color: #fff;
+                    height          : 40px;
+                    width           : 175px;
+                    align-items     : center;
+                    justify-content : center;
                 }
             }
         }

@@ -4,10 +4,15 @@ export const path = {
     LOGIN: '/login',
     REGISTER: '/register',
     LOG_OUT: '/logout',
+    USER_INFO: '/user-info',
     SYSTEM: '/system',
     DETAIL_DOCTOR: '/detail-doctor/:id',
     DETAIL_SPECIALTY: '/detail-specialty/:id',
     DETAIL_CLINIC: '/detail-clinic/:id',
+    LIST_ALL_CLINIC: '/list-all-clinic',
+    LIST_ALL_DOCTOR: '/list-all-doctor',
+    LIST_ALL_SPECIALTY: '/list-all-specialty',
+
     VERIFY_EMAIL_BOOKING: '/verify-booking',
 };
 

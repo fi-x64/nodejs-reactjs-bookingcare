@@ -207,7 +207,6 @@ class UserRedux extends Component {
         let positions = this.state.positionArr;
         let language = this.props.language;
         let isGetGenders = this.props.isLoadingGender;
-
         let { email, password, firstName, lastName,
             phonenumber, address, position, gender, role, avatar
         } = this.state;
