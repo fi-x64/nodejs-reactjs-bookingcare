@@ -118,6 +118,18 @@ const getAllGender = () => {
     return axios.get(`/api/get-all-gender`);
 }
 
+const checkEmail = (data) => {
+    return axios.post(`/api/check-email`, data);
+}
+
+const postVerifyRecoverPassword = (data) => {
+    return axios.post(`/verify-password-recover`, data);
+}
+
+const handleChangePassword = (data) => {
+    return axios.post(`/api/change-password-recover`, data);
+}
+
 export {
     handleLoginApi, handleRegisterApi,
     getAllUsers,
@@ -133,5 +145,7 @@ export {
     getAllClinic, getDetailClinicById,
     getAllPatientForDoctor, postSendRemedy,
     handleGoogleLoginApi, searchData,
-    getAllGender, updateUserInfo
+    getAllGender, updateUserInfo,
+    checkEmail, postVerifyRecoverPassword,
+    handleChangePassword
 };

@@ -171,15 +171,15 @@ class UserInfo extends Component {
                             <div className="row g-3">
                                 <div className="col-12 my-3">{isGetGenders === true ? 'Loading genders' : ''}</div>
                                 <div className="col-md-12">
-                                    <div className='preview-img-container'>
+                                    <div className='preview-img-container-info'>
                                         <input type="file" className="form-control show-image"
                                             id="previewImg" hidden
                                             onChange={(event) => this.handleOnChangeImage(event)} />
-                                        <div className='preview-img'
+                                        <div className='preview-img-info'
                                             style={{ backgroundImage: `url(${this.state.previewImgURL})` }}
                                             onClick={(event) => this.openPreviewImage()} >
                                         </div>
-                                        <label className='label-upload' htmlFor="previewImg">Tải ảnh <i className="fas fa-upload"></i></label>
+                                        <label className='label-upload-info' htmlFor="previewImg">Tải ảnh <i className="fas fa-upload"></i></label>
                                     </div>
                                 </div>
 

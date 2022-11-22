@@ -23,6 +23,8 @@ import ListAllClinic from './Patient/Clinic/ListAllClinic';
 import ListAllDoctor from './Patient/Doctor/ListAllDoctor';
 import ListAllSpecialty from './Patient/Specialty/ListAllSpecialty';
 import UserInfo from './Patient/UserInfo';
+import RecoverPassword from './Patient/RecoverPassword';
+import VerifyEmailPassword from './Patient/VerifyEmailPassword';
 
 class App extends Component {
 
@@ -56,6 +58,7 @@ class App extends Component {
                                     <Route path={path.HOME} exact component={(Home)} />
                                     <Route path={path.LOGIN} component={userIsNotAuthenticated(Login)} />
                                     <Route path={path.REGISTER} component={Register} />
+                                    <Route path={path.RECOVER_PASSWORD} component={RecoverPassword} />
                                     <Route path={path.SYSTEM} component={userIsAuthenticated(System)} />
                                     <Route path={'/doctor/'} component={userIsAuthenticated(Doctor)} />
                                     <Route path={path.USER_INFO} component={UserInfo} />
@@ -69,6 +72,7 @@ class App extends Component {
                                     <Route path={path.LIST_ALL_SPECIALTY} component={ListAllSpecialty} />
 
                                     <Route path={path.VERIFY_EMAIL_BOOKING} component={VerifyEmail} />
+                                    <Route path={path.VERIFY_EMAIL_PASSWORD} component={VerifyEmailPassword} />
                                 </Switch>
                             </CustomScrollbars>
                         </div>

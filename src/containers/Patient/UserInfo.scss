@@ -1,9 +1,9 @@
-.preview-img-container {
+.preview-img-container-info {
     display        : flex;
     align-items    : center;
     justify-content: center;
 
-    .label-upload {
+    .label-upload-info {
         padding      : 5px;
         border-radius: 3px;
         background   : #ddd;
@@ -15,7 +15,7 @@
         }
     }
 
-    .preview-img {
+    .preview-img-info {
         height         : 240px;
         width          : 240px;
         border         : 1px solid #ddd;

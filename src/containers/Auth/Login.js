@@ -9,6 +9,8 @@ import GoogleLogin from 'react-google-login';
 import FacebookLogin from 'react-facebook-login';
 import { gapi } from 'gapi-script';
 import { googleKeys } from '../../utils/keys';
+import HomeHeader from '../HomePage/HomeHeader';
+import HomeFooter from '../HomePage/HomeFooter';
 
 class Login extends Component {
     constructor(props) {
@@ -125,69 +127,73 @@ class Login extends Component {
     render() {
         // JSX
         return (
-            <div className='login-background'>
-                <div className='login-container'>
-                    <div className='login-content row'>
-                        <div className='col-12 text-login'>Login</div>
-                        <div className='col-12 form-group login-input'>
-                            <label>Email:</label>
-                            <input type='text'
-                                className='form-control'
-                                placeholder='Enter your email'
-                                value={this.state.username}
-                                onChange={(event) => this.handleOnChangeUsername(event)}
-                                onKeyDown={(event) => this.handleKeyDown(event)} />
-                        </div>
-                        <div className='col-12 form-group login-input'>
-                            <label>Password:</label>
-                            <div className='custom-input-password'>
-                                <input type={this.state.isShowPassword ? 'text' : 'password'}
+            <div>
+                <HomeHeader />
+                <div className='login-background'>
+                    <div className='login-container'>
+                        <div className='login-content row'>
+                            <div className='col-12 text-login'>Login</div>
+                            <div className='col-12 form-group login-input'>
+                                <label>Email:</label>
+                                <input type='text'
                                     className='form-control'
-                                    placeholder='Enter your password'
-                                    onChange={(event) => this.handleOnChangePassword(event)}
+                                    placeholder='Enter your email'
+                                    value={this.state.username}
+                                    onChange={(event) => this.handleOnChangeUsername(event)}
                                     onKeyDown={(event) => this.handleKeyDown(event)} />
-                                <span onClick={() => { this.handleShowHidePassword() }}>
-                                    <i className={this.state.isShowPassword ? 'far fa-eye' : 'far fa-eye-slash'}></i>
-                                </span>
                             </div>
-                        </div>
-                        <div className='col-12' style={{ color: 'red' }}>
-                            {this.state.errMessage}
-                        </div>
-                        <div className='col-12'>
-                            <button className='btn-login' onClick={() => { this.handleLogin() }}>Login</button>
-                        </div>
-                        <div className='col-12'>
-                            <span className='forgot-password'>Forgot your password?</span>
-                        </div>
-                        <span className='text-center'>Or Login with:</span>
-                        <div className='col-12 social-login'>
+                            <div className='col-12 form-group login-input'>
+                                <label>Password:</label>
+                                <div className='custom-input-password'>
+                                    <input type={this.state.isShowPassword ? 'text' : 'password'}
+                                        className='form-control'
+                                        placeholder='Enter your password'
+                                        onChange={(event) => this.handleOnChangePassword(event)}
+                                        onKeyDown={(event) => this.handleKeyDown(event)} />
+                                    <span onClick={() => { this.handleShowHidePassword() }}>
+                                        <i className={this.state.isShowPassword ? 'far fa-eye' : 'far fa-eye-slash'}></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <div className='col-12' style={{ color: 'red' }}>
+                                {this.state.errMessage}
+                            </div>
+                            <div className='col-12'>
+                                <button className='btn-login' onClick={() => { this.handleLogin() }}>Login</button>
+                            </div>
+                            <div className='col-12'>
+                                <a href="/recover-password" className='forgot-password'>Forgot your password?</a>
+                            </div>
+                            <span className='text-center'>Or Login with:</span>
+                            <div className='col-12 social-login'>
 
-                            <div className='google-custom'>
-                                <GoogleLogin
-                                    clientId={this.clientId}
-                                    buttonText="Login with Google"
-                                    onSuccess={this.successGoogle}
-                                    onFailure={this.failGoogle}
-                                    cookiePolicy={'single_host_origin'}
-                                    isSignedIn={false}
-                                />
+                                <div className='google-custom'>
+                                    <GoogleLogin
+                                        clientId={this.clientId}
+                                        buttonText="Login with Google"
+                                        onSuccess={this.successGoogle}
+                                        onFailure={this.failGoogle}
+                                        cookiePolicy={'single_host_origin'}
+                                        isSignedIn={false}
+                                    />
+                                </div>
                             </div>
-                        </div>
-                        <div className='col-12 social-login'>
-                            <div>
-                                <FacebookLogin
-                                    appId=""
-                                    autoLoad={false}
-                                    fields="name,email,picture"
-                                    callback={this.responseFacebook}
-                                    cssClass="facebook-custom"
-                                    icon="fa-facebook"
-                                />
+                            <div className='col-12 social-login'>
+                                <div>
+                                    <FacebookLogin
+                                        appId=""
+                                        autoLoad={false}
+                                        fields="name,email,picture"
+                                        callback={this.responseFacebook}
+                                        cssClass="facebook-custom"
+                                        icon="fa-facebook"
+                                    />
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <HomeFooter />
             </div>
         )
     }

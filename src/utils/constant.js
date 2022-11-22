@@ -3,6 +3,7 @@ export const path = {
     HOMEPAGE: '/home',
     LOGIN: '/login',
     REGISTER: '/register',
+    RECOVER_PASSWORD: '/recover-password',
     LOG_OUT: '/logout',
     USER_INFO: '/user-info',
     SYSTEM: '/system',
@@ -14,6 +15,7 @@ export const path = {
     LIST_ALL_SPECIALTY: '/list-all-specialty',
 
     VERIFY_EMAIL_BOOKING: '/verify-booking',
+    VERIFY_EMAIL_PASSWORD: '/verify-password-recover',
 };
 
 export const LANGUAGES = {
