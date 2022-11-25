@@ -7,7 +7,7 @@ import { getDetailInforDoctor } from '../../../services/userService'
 import DoctorSchedule from './DoctorSchedule';
 import DoctorExtraInfor from './DoctorExtraInfor';
 import LikeAndShare from '../SocialPlugin/LikeAndShare';
-import Comment from '../SocialPlugin/Comment';
+import Comment from './Comment';
 
 class DetailDoctor extends Component {
     constructor(props) {
@@ -15,15 +15,18 @@ class DetailDoctor extends Component {
         this.state = {
             detailDoctor: {},
             currentDoctorId: -1,
+            user: '',
         }
     }
 
     async componentDidMount() {
+        let user = localStorage.getItem('user');
         if (this.props.match && this.props.match.params && this.props.match.params.id) {
             let id = this.props.match.params.id;
 
             this.setState({
-                currentDoctorId: id
+                currentDoctorId: id,
+                user: user
             })
 
             let res = await getDetailInforDoctor(id);
@@ -54,7 +57,6 @@ class DetailDoctor extends Component {
 
         let currentURL = process.env.REACT_APP_IS_LOCALHOST === 1 ?
             "https://developers.facebook.com/docs/plugins/comments#configurator" : window.location.href;
-
         return (
             <>
                 <HomeHeader
@@ -98,8 +100,7 @@ class DetailDoctor extends Component {
                     </div>
                     <div className='comment-doctor'>
                         <Comment
-                            dataHref={currentURL}
-                            width={"100%"}
+                            doctorIdFromParent={detailDoctor && detailDoctor.id ? detailDoctor.id : null}
                         />
                     </div>
                 </div>

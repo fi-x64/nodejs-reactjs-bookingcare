@@ -130,6 +130,22 @@ const handleChangePassword = (data) => {
     return axios.post(`/api/change-password-recover`, data);
 }
 
+const getCommentDoctor = (doctorId) => {
+    return axios.get(`/api/get-comment-doctor?doctorId=${doctorId}`);
+}
+
+const checkUserComment = (doctorId, patientId) => {
+    return axios.get(`/api/check-user-comment?doctorId=${doctorId}&patientId=${patientId}`);
+}
+
+const handleComment = (data) => {
+    return axios.post(`/api/handle-comment`, data);
+}
+
+const handleDeleteComment = (comentId) => {
+    return axios.get(`/api/delete-comment?commentId=${comentId}`);
+}
+
 export {
     handleLoginApi, handleRegisterApi,
     getAllUsers,
@@ -147,5 +163,7 @@ export {
     handleGoogleLoginApi, searchData,
     getAllGender, updateUserInfo,
     checkEmail, postVerifyRecoverPassword,
-    handleChangePassword
+    handleChangePassword, getCommentDoctor,
+    checkUserComment, handleComment,
+    handleDeleteComment
 };
