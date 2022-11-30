@@ -25,6 +25,7 @@ import ListAllSpecialty from './Patient/Specialty/ListAllSpecialty';
 import UserInfo from './Patient/UserInfo';
 import RecoverPassword from './Patient/RecoverPassword';
 import VerifyEmailPassword from './Patient/VerifyEmailPassword';
+import PaymentReturn from './Patient/PaymentReturn';
 
 class App extends Component {
 
@@ -73,6 +74,8 @@ class App extends Component {
 
                                     <Route path={path.VERIFY_EMAIL_BOOKING} component={VerifyEmail} />
                                     <Route path={path.VERIFY_EMAIL_PASSWORD} component={VerifyEmailPassword} />
+                                    <Route path={path.PAYMENT_RETURN} component={PaymentReturn} />
+
                                 </Switch>
                             </CustomScrollbars>
                         </div>

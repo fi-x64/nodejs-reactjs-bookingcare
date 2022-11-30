@@ -5,18 +5,17 @@ import { FormattedMessage } from 'react-intl';
 import './BookingModal.scss';
 import { Modal } from 'reactstrap';
 import ProfileDoctor from '../ProfileDoctor';
-import { } from '../../../../services/userService';
+import { getDoctorPayment } from '../../../../services/userService';
 import _ from 'lodash';
 import DatePicker from '../../../../components/Input/DatePicker';
 import * as actions from '../../../../store/actions'
 import { LANGUAGES } from '../../../../utils';
 import Select from 'react-select';
-import { getExtraInforDoctorById, postPatientBookAppointment, getDoctorPayment, processPayment } from '../../../../services/userService';
+import { postPatientBookAppointment } from '../../../../services/userService';
 import { toast } from "react-toastify";
 import moment from 'moment';
-import Paypal from './PayPalModal';
-import LoadingOverlay from 'react-loading-overlay';
-
+import LoadingOverlay
+    from 'react-loading-overlay';
 class BookingModal extends Component {
     constructor(props) {
         super(props);
@@ -33,9 +32,7 @@ class BookingModal extends Component {
             paymentMethod: '',
             doctorId: '',
             timeType: '',
-            isShowLoading: false,
-            extraInfor: '',
-            selectedBank: '',
+            isShowLoading: false
         }
     }
 
@@ -55,12 +52,7 @@ class BookingModal extends Component {
 
     async componentDidMount() {
         this.props.getGenders();
-
-        let res = await getExtraInforDoctorById(this.props.dataTime.doctorId);
-        if (res && res.errCode === 0)
-            this.setState({
-                extraInfor: res.data
-            })
+        this.props.getPayment();
     }
 
     async componentDidUpdate(prevProps, nextState, snapshot) {
@@ -86,12 +78,12 @@ class BookingModal extends Component {
         }
 
         if (this.props.dataTime.doctorId !== prevProps.dataTime.doctorId) {
-            let res = await getExtraInforDoctorById(this.props.dataTime.doctorId);
-            if (res && res.errCode === 0)
+            let doctorPayment = await getDoctorPayment(this.props.dataTime.doctorId);
+            if (doctorPayment && doctorPayment.errCode === 0) {
                 this.setState({
-                    extraInfor: res.data
+                    paymentMethod: doctorPayment.data.paymentId
                 })
-            console.log("Check extraInfor: ", this.state.extraInfor);
+            }
         }
     }
 
@@ -116,10 +108,6 @@ class BookingModal extends Component {
 
     handleChangePaymentSelect = (event) => {
         this.setState({ selectedPaymentMethod: event.target.value })
-    }
-
-    handleChangeBankSelect = (event) => {
-        this.setState({ selectedBank: event.target.value })
     }
 
     buildTimeBooking = (dataTime) => {
@@ -150,62 +138,55 @@ class BookingModal extends Component {
 
     handleConfirmBooking = async () => {
         //validate input
-
-        this.setState({
-            isShowLoading: true
-        })
-        let date = new Date(this.state.birthday).getTime();
-        let timeString = this.buildTimeBooking(this.props.dataTime);
-        let doctorName = this.buildDoctorName(this.props.dataTime);
-
-        var res = await postPatientBookAppointment({
-            fullName: this.state.fullName,
-            phoneNumber: this.state.phoneNumber,
-            email: this.state.email,
-            address: this.state.address,
-            reason: this.state.reason,
-            date: this.props.dataTime.date,
-            birthday: date,
-            selectedGender: this.state.selectedGender.value,
-            doctorId: this.state.doctorId,
-            timeType: this.state.timeType,
-            language: this.props.language,
-            timeString: timeString,
-            doctorName: doctorName,
-            paymentMethod: this.state.selectedPaymentMethod,
-            amount: this.state.extraInfor.priceTypeData.valueVi,
-            bankCode: this.state.selectedBank,
-        })
-        console.log("Check res: ", res);
-        if (res.dataPayment.url) {
-            window.location.href = res.dataPayment.url;
-        }
-        this.setState({
-            isShowLoading: true
-        })
-        if (res && res.errCode === 0) {
-            toast.success('Booking a new appointment succeed!');
-
-            if (this.state.selectedPaymentMethod === 'paypal') {
-                this.render(<Paypal />)
-
-            }
-            this.props.closeBookingModal();
+        if (this.state.selectedPaymentMethod === 'cash') {
             this.setState({
-                isShowLoading: false
+                isShowLoading: true
             })
+            let date = new Date(this.state.birthday).getTime();
+            let timeString = this.buildTimeBooking(this.props.dataTime);
+            let doctorName = this.buildDoctorName(this.props.dataTime);
+
+            let res = await postPatientBookAppointment({
+                fullName: this.state.fullName,
+                phoneNumber: this.state.phoneNumber,
+                email: this.state.email,
+                address: this.state.address,
+                reason: this.state.reason,
+                date: this.props.dataTime.date,
+                birthday: date,
+                selectedGender: this.state.selectedGender.value,
+                doctorId: this.state.doctorId,
+                timeType: this.state.timeType,
+                language: this.props.language,
+                timeString: timeString,
+                doctorName: doctorName,
+            })
+
+            this.setState({
+                isShowLoading: true
+            })
+            if (res && res.errCode === 0) {
+                toast.success('Booking a new appointment succeed!');
+                this.props.closeBookingModal();
+                this.setState({
+                    isShowLoading: false
+                })
+            } else {
+                toast.error('Booking a new appointment failed!');
+                this.setState({
+                    isShowLoading: false
+                })
+            }
+        } else if (this.state.selectedPaymentMethod === 'vnpay' || this.state.selectedPaymentMethod === 'paypal') {
 
         } else {
-            toast.error('Booking a new appointment failed!');
-            this.setState({
-                isShowLoading: false
-            })
+            toast.error("Vui lòng chọn tất cả các trường");
         }
     }
 
     render() {
         let { isOpenModal, closeBookingModal, dataTime } = this.props;
-        let { extraInfor } = this.state;
+        let { paymentMethod } = this.state;
         let doctorId = '';
         if (dataTime && !_.isEmpty(dataTime)) {
             doctorId = dataTime.doctorId;
@@ -285,57 +266,24 @@ class BookingModal extends Component {
                                 </div>
                                 <div className='col-6 form-group'>
                                     <label><FormattedMessage id="patient.booking-modal.paymentMethod" /></label>
-                                    {extraInfor.paymentId && extraInfor.paymentId === "PAY1" ? <select className="form-select" onChange={(event) => this.handleChangePaymentSelect(event)} value={this.state.selectedPaymentMethod}>
+                                    {paymentMethod && paymentMethod === "PAY1" ? <select class="form-select" onChange={(event) => this.handleChangePaymentSelect(event)} value={this.state.selectedPaymentMethod}>
                                         <option selected>Chọn phương thức thanh toán</option>
                                         <option value="cash">Tiền mặt</option>
-                                    </select> : extraInfor.paymentId && extraInfor.paymentId === "PAY2" ? <select className="form-select" onChange={(event) => this.handleChangePaymentSelect(event)} value={this.state.selectedPaymentMethod}>
+                                    </select> : paymentMethod && paymentMethod === "PAY2" ? <select class="form-select" onChange={(event) => this.handleChangePaymentSelect(event)} value={this.state.selectedPaymentMethod}>
                                         <option selected>Chọn phương thức thanh toán</option>
                                         <option value="vnpay">VNPay</option>
                                         <option value="paypal">PayPal</option>
 
-                                    </select> : extraInfor.paymentId && extraInfor.paymentId === "PAY3" ? <select className="form-select" onChange={(event) => this.handleChangePaymentSelect(event)} value={this.state.selectedPaymentMethod}>
+                                    </select> : paymentMethod && paymentMethod === "PAY3" ? <select class="form-select" onChange={(event) => this.handleChangePaymentSelect(event)} value={this.state.selectedPaymentMethod}>
                                         <option selected>Chọn phương thức thanh toán</option>
                                         <option value="cash">Tiền mặt</option>
                                         <option value="vnpay">VNPay</option>
                                         <option value="paypal">PayPal</option>
-                                    </select> : <select className="form-select">
+                                    </select> : <select class="form-select">
                                         <option selected>Không có phương thức thanh toán</option>
                                     </select>
                                     }
-                                </div>
-                                <div className='col-6 form-group'>
-                                    <label><FormattedMessage id="patient.booking-modal.amountOfMoney" /></label>
-                                    <input className='form-control'
-                                        value={extraInfor.priceTypeData?.valueVi ? extraInfor.priceTypeData.valueVi + " VNĐ" : ""}
-                                        readOnly />
-                                </div>
-                                <div className='col-6 form-group'>
-                                    <label><FormattedMessage id="patient.booking-modal.chooseBank" /></label>
-                                    <select className="form-select" onChange={(event) => this.handleChangeBankSelect(event)} value={this.state.selectedBank}>
-                                        <option selected>Chọn ngân hàng thanh toán</option>
-                                        <option value="NCB"> Ngan hang NCB</option>
-                                        <option value="AGRIBANK"> Ngan hang Agribank</option>
-                                        <option value="SCB"> Ngan hang SCB</option>
-                                        <option value="SACOMBANK">Ngan hang SacomBank</option>
-                                        <option value="EXIMBANK"> Ngan hang EximBank</option>
-                                        <option value="MSBANK"> Ngan hang MSBANK</option>
-                                        <option value="NAMABANK"> Ngan hang NamABank</option>
-                                        <option value="VNMART"> Vi dien tu VnMart</option>
-                                        <option value="VIETINBANK">Ngan hang Vietinbank</option>
-                                        <option value="VIETCOMBANK"> Ngan hang VCB</option>
-                                        <option value="HDBANK">Ngan hang HDBank</option>
-                                        <option value="DONGABANK"> Ngan hang Dong A</option>
-                                        <option value="TPBANK"> Ngân hàng TPBank</option>
-                                        <option value="OJB"> Ngân hàng OceanBank</option>
-                                        <option value="BIDV"> Ngân hàng BIDV</option>
-                                        <option value="TECHCOMBANK"> Ngân hàng Techcombank</option>
-                                        <option value="VPBANK"> Ngan hang VPBank</option>
-                                        <option value="MBBANK"> Ngan hang MBBank</option>
-                                        <option value="ACB"> Ngan hang ACB</option>
-                                        <option value="OCB"> Ngan hang OCB</option>
-                                        <option value="IVB"> Ngan hang IVB</option>
-                                        <option value="VISA"> Thanh toan qua VISA/MASTER</option>
-                                    </select>
+
                                 </div>
                             </div>
                         </div>

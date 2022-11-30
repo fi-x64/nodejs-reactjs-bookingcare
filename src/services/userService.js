@@ -146,6 +146,23 @@ const handleDeleteComment = (comentId) => {
     return axios.get(`/api/delete-comment?commentId=${comentId}`);
 }
 
+const getDoctorPayment = (doctorId) => {
+    console.log("Check doctorId: ", doctorId);
+    return axios.get(`/api/get-doctor-payment?doctorId=${doctorId}`);
+}
+
+const processPayment = (data) => {
+    return axios.post(`/api/process-payment`, data);
+}
+
+const handleStatisticBookingWeek = () => {
+    return axios.get(`/api/statistic-booking-week`);
+}
+
+const handleStatisticPatientAddress = () => {
+    return axios.get(`/api/statistic-patient-address`);
+}
+
 export {
     handleLoginApi, handleRegisterApi,
     getAllUsers,
@@ -165,5 +182,7 @@ export {
     checkEmail, postVerifyRecoverPassword,
     handleChangePassword, getCommentDoctor,
     checkUserComment, handleComment,
-    handleDeleteComment
+    handleDeleteComment, getDoctorPayment,
+    processPayment, handleStatisticBookingWeek,
+    handleStatisticPatientAddress
 };

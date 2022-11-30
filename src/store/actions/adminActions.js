@@ -327,3 +327,29 @@ export const fetchRequiredDoctorInforSuccess = (allRequiredData) => ({
 export const fetchRequiredDoctorInforFailed = () => ({
     type: actionTypes.FETCH_REQUIRED_DOCTOR_INFOR_FAILED,
 })
+
+export const fetchAllPaymentMethod = () => {
+    return async (dispatch, getState) => {
+        try {
+            let resPayment = await getAllCodeService("PAYMENT");
+            if (resPayment && resPayment.errCode === 0) {
+                dispatch(fetchAllPaymentMethodSuccess(resPayment.data));
+            } else {
+                toast.error("Fetch all payments error!");
+                dispatch(fetchAllPaymentMethodFailed());
+            }
+        } catch (e) {
+            toast.error("Fetch all payments error!");
+            dispatch(fetchAllPaymentMethodFailed());
+        }
+    }
+}
+
+export const fetchAllPaymentMethodSuccess = (data) => ({
+    type: 'FETCH_ALL_PAYMENT_METHOD_SUCCESS',
+    data: data
+})
+
+export const fetchAllPaymentMethodFailed = () => ({
+    type: 'FETCH_ALL_PAYMENT_METHOD_FAILED',
+})

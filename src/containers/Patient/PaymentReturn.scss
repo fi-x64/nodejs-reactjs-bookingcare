@@ -1,0 +1,39 @@
+.form-container {
+    border          : 1px solid black;
+    align-items     : center;
+    height          : 50vh;
+    width           : 50vh;
+    background-color: #f2f2f2;
+    border-radius   : 12px;
+    margin          : 50px auto;
+
+    .form-title {
+        text-align: center;
+        margin-top: 20px;
+        position  : relative;
+
+        .check {
+            font-size       : 50px;
+            background-color: green;
+            color           : #fff;
+            border-radius   : 50%;
+        }
+    }
+
+    .form-content {
+        display    : flex;
+        align-items: center;
+        margin     : 0 auto;
+        margin-top : 20px;
+        transform  : translate(30%);
+
+        .content-value {
+            margin-left: 10px;
+        }
+    }
+
+    a {
+        margin-top: 20px;
+        transform : translateX(100%);
+    }
+}

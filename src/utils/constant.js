@@ -16,6 +16,8 @@ export const path = {
 
     VERIFY_EMAIL_BOOKING: '/verify-booking',
     VERIFY_EMAIL_PASSWORD: '/verify-password-recover',
+
+    PAYMENT_RETURN: '/payment_return',
 };
 
 export const LANGUAGES = {

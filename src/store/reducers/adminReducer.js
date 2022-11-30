@@ -139,6 +139,18 @@ const adminReducer = (state = initialState, action) => {
             return {
                 ...state,
             }
+
+        case actionTypes.FETCH_ALL_PAYMENT_METHOD_SUCCESS:
+            state.allPaymentMethod = action.data;
+            return {
+                ...state,
+            }
+
+        case actionTypes.FETCH_ALL_PAYMENT_METHOD_FAILED:
+            state.allPaymentMethod = [];
+            return {
+                ...state,
+            }
         default:
             return state;
     }

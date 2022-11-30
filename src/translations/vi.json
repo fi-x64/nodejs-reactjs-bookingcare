@@ -37,7 +37,9 @@
             "specialty": "Chuyên khoa",
             "manage-specialty": "Quản lý chuyên khoa",
             "handbook": "Cẩm nang",
-            "manage-handbook": "Quản lý cẩm nang"
+            "manage-handbook": "Quản lý cẩm nang",
+            "statistic": "Thống kê",
+            "see-statistic": "Xem thống kê"
         },
         "doctor": {
             "manage-schedule": "Quản lý kế hoạch khám bệnh",
@@ -96,7 +98,10 @@
             "btnConfirm": "Xác nhận",
             "btnCancel": "Huỷ bỏ",
             "priceBooking": "Miễn phí đặt lịch",
-            "price": "Giá khám: "
+            "price": "Giá khám: ",
+            "paymentMethod": "Chọn phương thức thanh toán:",
+            "amountOfMoney": "Số tiền cần thanh toán:",
+            "chooseBank": "Chọn ngân hàng thanh toán:"
         }
     },
     "admin": {

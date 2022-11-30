@@ -37,7 +37,9 @@
             "specialty": "Specialties",
             "manage-specialty": "Manage specialties",
             "handbook": "Handbooks",
-            "manage-handbook": "Manage handbooks"
+            "manage-handbook": "Manage handbooks",
+            "statistic": "Statistics",
+            "see-statistic": "Show all statistics"
         },
         "doctor": {
             "manage-schedule": "Manage Doctor's schedule",
@@ -96,7 +98,10 @@
             "btnConfirm": "Confirm",
             "btnCancel": "Cancel",
             "priceBooking": "Free booking",
-            "price": "Price: "
+            "price": "Price: ",
+            "paymentMethod": "Choose payment method:",
+            "amountOfMoney": "Money needs to pay:",
+            "chooseBank": "Choose bank:"
         }
     },
     "admin": {
