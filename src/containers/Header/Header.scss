@@ -25,6 +25,14 @@
     }
 
     .languages {
+        .direct {
+            text-decoration: none;
+            color          : #fff;
+            margin-right   : 10px;
+            border         : 1px solid #fff;
+            padding        : 8px;
+        }
+
         .welcome {
             margin-right: 10px;
         }

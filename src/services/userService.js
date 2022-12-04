@@ -106,6 +106,10 @@ const getAllPatientForDoctor = (data) => {
     return axios.get(`/api/get-list-patient-for-doctor?doctorId=${data.doctorId}&date=${data.date}`);
 }
 
+const getAllBookingUser = (userId) => {
+    return axios.get(`/api/get-all-booking-user?userId=${userId}`);
+}
+
 const postSendRemedy = (data) => {
     return axios.post(`/api/send-remedy`, data);
 }
@@ -120,6 +124,10 @@ const getAllGender = () => {
 
 const checkEmail = (data) => {
     return axios.post(`/api/check-email`, data);
+}
+
+const processHandleCheckPassword = (data) => {
+    return axios.post(`/api/check-old-password`, data);
 }
 
 const postVerifyRecoverPassword = (data) => {
@@ -155,12 +163,20 @@ const processPayment = (data) => {
     return axios.post(`/api/process-payment`, data);
 }
 
+const handlePaymentReturn = (data) => {
+    return axios.post(`/api/payment-return`, data);
+}
+
 const handleStatisticBookingWeek = () => {
     return axios.get(`/api/statistic-booking-week`);
 }
 
 const handleStatisticPatientAddress = () => {
     return axios.get(`/api/statistic-patient-address`);
+}
+
+const handleStatisticCheckoutSuccess = () => {
+    return axios.get(`/api/statistic-checkout-success`);
 }
 
 export {
@@ -184,5 +200,7 @@ export {
     checkUserComment, handleComment,
     handleDeleteComment, getDoctorPayment,
     processPayment, handleStatisticBookingWeek,
-    handleStatisticPatientAddress
+    handleStatisticPatientAddress, handlePaymentReturn,
+    getAllBookingUser, processHandleCheckPassword,
+    handleStatisticCheckoutSuccess
 };

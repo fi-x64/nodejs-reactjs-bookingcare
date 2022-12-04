@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import Statistic from './Statistic';
-import { handleStatisticBookingWeek, handleStatisticPatientAddress } from "../../../services/userService";
+import { handleStatisticBookingWeek, handleStatisticPatientAddress, handleStatisticCheckoutSuccess } from "../../../services/userService";
 import moment from 'moment';
 
 class StatisticParent extends Component {
@@ -10,6 +10,7 @@ class StatisticParent extends Component {
         this.state = {
             statisticWeek: '',
             statisticPatientAddress: '',
+            statisticCheckoutSuccess: '',
         }
     }
 
@@ -39,6 +40,7 @@ class StatisticParent extends Component {
                 },
             ],
         }
+
         res = await handleStatisticPatientAddress();
         console.log("Check res: ", res);
         let dataStatisticPatientAddress = {
@@ -63,10 +65,41 @@ class StatisticParent extends Component {
                 },
             ],
         }
+
+        res = await handleStatisticCheckoutSuccess();
+
+        let dataStatisticCheckoutSuccess = {
+            labels: res.data.map((data) => {
+                if (data.paymentDate != null) {
+                    let t = data.paymentDate;
+                    t = moment(t, 'YYYYMMDDHHmmss').format("DD-MM-YYYY");
+                    t = t.charAt(0).toUpperCase() + t.slice(1);
+                    return t
+                }
+                else return "Undefined checkout";
+            }),
+            datasets: [
+                {
+                    label: "Thống kê theo đơn đã khám và thanh toán thành công trong tuần",
+                    data: res.data.map((data) => data.paymentCount),
+                    backgroundColor: [
+                        "rgba(75,192,192,1)",
+                        "#ecf0f1",
+                        "#50AF95",
+                        "#f3ba2f",
+                        "#2a71d0",
+                    ],
+                    borderColor: "black",
+                    borderWidth: 2,
+                },
+            ],
+        }
         this.setState({
             statisticWeek: dataStatisticBookingWeek,
-            statisticPatientAddress: dataStatisticPatientAddress
+            statisticPatientAddress: dataStatisticPatientAddress,
+            statisticCheckoutSuccess: dataStatisticCheckoutSuccess,
         })
+
     }
 
     componentDidUpdate = () => {
@@ -79,6 +112,7 @@ class StatisticParent extends Component {
                 {this.state.statisticWeek && this.state.statisticPatientAddress && <Statistic
                     statisticWeek={this.state.statisticWeek}
                     statisticPatientAddress={this.state.statisticPatientAddress}
+                    statisticCheckoutSuccess={this.state.statisticCheckoutSuccess}
                 />}
 
             </>

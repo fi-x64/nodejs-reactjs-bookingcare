@@ -1,5 +1,14 @@
+h2 .title {
+    text-align: center !important;
+    font-size : 30px !important;
+}
+
 .Statistic {
-    text-align: center;
+    text-align     : center;
+    display        : flex;
+    flex-wrap      : wrap;
+    margin-top     : 40px;
+    justify-content: center;
 }
 
 .Statistic-logo {

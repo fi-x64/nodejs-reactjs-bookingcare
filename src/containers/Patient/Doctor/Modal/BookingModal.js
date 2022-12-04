@@ -21,7 +21,8 @@ class BookingModal extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            fullName: '',
+            firstName: '',
+            lastName: '',
             phoneNumber: '',
             email: '',
             address: '',
@@ -36,6 +37,7 @@ class BookingModal extends Component {
             isShowLoading: false,
             extraInfor: '',
             selectedBank: '',
+            notShowChooseBank: true,
         }
     }
 
@@ -115,7 +117,17 @@ class BookingModal extends Component {
     }
 
     handleChangePaymentSelect = (event) => {
-        this.setState({ selectedPaymentMethod: event.target.value })
+        if (event.target.value === 'vnpay') {
+            this.setState({
+                notShowChooseBank: false,
+                selectedPaymentMethod: event.target.value
+            })
+        } else {
+            this.setState({
+                notShowChooseBank: true,
+                selectedPaymentMethod: event.target.value
+            })
+        }
     }
 
     handleChangeBankSelect = (event) => {
@@ -159,7 +171,8 @@ class BookingModal extends Component {
         let doctorName = this.buildDoctorName(this.props.dataTime);
 
         var res = await postPatientBookAppointment({
-            fullName: this.state.fullName,
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
             phoneNumber: this.state.phoneNumber,
             email: this.state.email,
             address: this.state.address,
@@ -176,8 +189,7 @@ class BookingModal extends Component {
             amount: this.state.extraInfor.priceTypeData.valueVi,
             bankCode: this.state.selectedBank,
         })
-        console.log("Check res: ", res);
-        if (res.dataPayment.url) {
+        if (res?.dataPayment?.url) {
             window.location.href = res.dataPayment.url;
         }
         this.setState({
@@ -240,10 +252,16 @@ class BookingModal extends Component {
                             </div>
                             <div className='row'>
                                 <div className='col-6 form-group'>
-                                    <label><FormattedMessage id="patient.booking-modal.fullName" /></label>
+                                    <label><FormattedMessage id="patient.booking-modal.firstName" /></label>
                                     <input className='form-control'
-                                        value={this.state.fullName}
-                                        onChange={(event) => this.handleOnChangeInput(event, 'fullName')} />
+                                        value={this.state.firstName}
+                                        onChange={(event) => this.handleOnChangeInput(event, 'firstName')} />
+                                </div>
+                                <div className='col-6 form-group'>
+                                    <label><FormattedMessage id="patient.booking-modal.lastName" /></label>
+                                    <input className='form-control'
+                                        value={this.state.lastName}
+                                        onChange={(event) => this.handleOnChangeInput(event, 'lastName')} />
                                 </div>
                                 <div className='col-6 form-group'>
                                     <label><FormattedMessage id="patient.booking-modal.phoneNumber" /></label>
@@ -263,7 +281,7 @@ class BookingModal extends Component {
                                         value={this.state.address}
                                         onChange={(event) => this.handleOnChangeInput(event, 'address')} />
                                 </div>
-                                <div className='col-12 form-group'>
+                                <div className='col-6 form-group'>
                                     <label><FormattedMessage id="patient.booking-modal.reason" /></label>
                                     <input className='form-control'
                                         value={this.state.reason}
@@ -309,7 +327,7 @@ class BookingModal extends Component {
                                         value={extraInfor.priceTypeData?.valueVi ? extraInfor.priceTypeData.valueVi + " VNĐ" : ""}
                                         readOnly />
                                 </div>
-                                <div className='col-6 form-group'>
+                                <div className='col-6 form-group' hidden={this.state.notShowChooseBank}>
                                     <label><FormattedMessage id="patient.booking-modal.chooseBank" /></label>
                                     <select className="form-select" onChange={(event) => this.handleChangeBankSelect(event)} value={this.state.selectedBank}>
                                         <option selected>Chọn ngân hàng thanh toán</option>

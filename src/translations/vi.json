@@ -88,7 +88,8 @@
         },
         "booking-modal": {
             "title": "Thông tin đặt lịch khám bệnh",
-            "fullName": "Họ và tên",
+            "firstName": "Họ",
+            "lastName": "Tên",
             "phoneNumber": "Số điện thoại",
             "email": "Địa chỉ email",
             "address": "Địa chỉ liên lạc",

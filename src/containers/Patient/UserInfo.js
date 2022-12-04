@@ -43,43 +43,79 @@ class UserInfo extends Component {
     }
 
     async componentDidMount() {
-        // let userInfo = this.props.userInfo;
-        let userLocal = JSON.parse(localStorage.getItem('user'));
-        let userInfo = userLocal.user;
+        let userInfo = this.props.userInfo;
 
-        let res = await getAllUsers(userInfo.id);
-        let userData = res.users;
+        if (userInfo) {
+            let res = await getAllUsers(userInfo.id);
+            let userData = res.users;
 
-        this.props.getGenderStart();
-        let resGenders = await getAllCodeService("GENDER");
-        let arrGenders = resGenders.data;
+            this.props.getGenderStart();
+            let resGenders = await getAllCodeService("GENDER");
+            let arrGenders = resGenders.data;
 
-        this.setState({
-            genderArr: arrGenders,
-        })
-
-        let imageBase64 = '';
-        if (userData.image) {
-            imageBase64 = new Buffer(userData.image, 'base64').toString('binary');
-        }
-
-        if (res && res.errCode === 0) {
             this.setState({
-                userEditId: userData.id,
-                email: userData.email,
-                firstName: userData.firstName,
-                lastName: userData.lastName,
-                address: userData.address,
-                phonenumber: userData.phonenumber,
-                gender: userData.gender,
-                image: userData.image,
-                role: userData.roleId === 'R1' ? 'Admin' : userData.roleId === 'R2' ? 'Doctor' : 'User',
-                previewImgURL: imageBase64,
-                avatar: userData.imageBase64,
+                genderArr: arrGenders,
             })
+
+            let imageBase64 = '';
+            if (userData.image) {
+                imageBase64 = new Buffer(userData.image, 'base64').toString('binary');
+            }
+
+            if (res && res.errCode === 0) {
+                this.setState({
+                    userEditId: userData.id,
+                    email: userData.email,
+                    firstName: userData.firstName,
+                    lastName: userData.lastName,
+                    address: userData.address,
+                    phonenumber: userData.phonenumber,
+                    gender: userData.gender,
+                    image: userData.image,
+                    role: userData.roleId === 'R1' ? 'Admin' : userData.roleId === 'R2' ? 'Doctor' : 'User',
+                    previewImgURL: imageBase64,
+                    avatar: userData.imageBase64,
+                })
+            }
         }
+    }
 
+    async componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.props.userInfo != prevProps.userInfo) {
+            let userInfo = this.props.userInfo;
 
+            let res = await getAllUsers(userInfo.id);
+            let userData = res.users;
+
+            this.props.getGenderStart();
+            let resGenders = await getAllCodeService("GENDER");
+            let arrGenders = resGenders.data;
+
+            this.setState({
+                genderArr: arrGenders,
+            })
+
+            let imageBase64 = '';
+            if (userData.image) {
+                imageBase64 = new Buffer(userData.image, 'base64').toString('binary');
+            }
+
+            if (res && res.errCode === 0) {
+                this.setState({
+                    userEditId: userData.id,
+                    email: userData.email,
+                    firstName: userData.firstName,
+                    lastName: userData.lastName,
+                    address: userData.address,
+                    phonenumber: userData.phonenumber,
+                    gender: userData.gender,
+                    image: userData.image,
+                    role: userData.roleId === 'R1' ? 'Admin' : userData.roleId === 'R2' ? 'Doctor' : 'User',
+                    previewImgURL: imageBase64,
+                    avatar: userData.imageBase64,
+                })
+            }
+        }
     }
 
     handleOnChangeImage = async (event) => {

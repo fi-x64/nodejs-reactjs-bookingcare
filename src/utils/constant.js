@@ -3,6 +3,7 @@ export const path = {
     HOMEPAGE: '/home',
     LOGIN: '/login',
     REGISTER: '/register',
+    CHANGE_PASSWORD: '/change-password',
     RECOVER_PASSWORD: '/recover-password',
     LOG_OUT: '/logout',
     USER_INFO: '/user-info',
@@ -13,11 +14,12 @@ export const path = {
     LIST_ALL_CLINIC: '/list-all-clinic',
     LIST_ALL_DOCTOR: '/list-all-doctor',
     LIST_ALL_SPECIALTY: '/list-all-specialty',
+    BOOKING_LIST: '/booking-user-list',
 
     VERIFY_EMAIL_BOOKING: '/verify-booking',
     VERIFY_EMAIL_PASSWORD: '/verify-password-recover',
 
-    PAYMENT_RETURN: '/payment_return',
+    PAYMENT_INFO: '/payment-info',
 };
 
 export const LANGUAGES = {

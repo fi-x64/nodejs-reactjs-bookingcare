@@ -8,7 +8,6 @@ import './Header.scss';
 import { LANGUAGES, USER_ROLE } from '../../utils';
 import { FormattedMessage } from 'react-intl';
 import _ from 'lodash';
-import AdminPage from '../../components/AdminPage';
 
 class Header extends Component {
     constructor(props) {
@@ -57,16 +56,11 @@ class Header extends Component {
                     <div className="header-tabs-container">
                         <Navigator menus={this.state.menuApp} />
                     </div>
-                    {/* {isOpenSidebar ?
-                        <div className="">
-                            <AdminPage menus={this.state.menuApp}
-                                handleOpenSidebar={this.handleOpenSidebar} />
-                        </div>
-                        : <a href="#" class="sidebar-toggler" onClick={this.handleOpenSidebar}>
-                            <i class="fas fa-bars"></i>
-                        </a>} */}
 
                     <div className='languages'>
+                        <span >
+                            <a className='btn btn-warning direct' href='/'>Chuyển sang trang chủ</a>
+                        </span>
                         <span className='welcome'><FormattedMessage id="homeheader.welcome" />, {userInfo && userInfo.firstName ? userInfo.firstName : ''} </span>
                         <span className={language === LANGUAGES.VI ? "language-vi active" : "language-vi"}
                             onClick={() => this.handleChangeLanguage(LANGUAGES.VI)}>VN</span>

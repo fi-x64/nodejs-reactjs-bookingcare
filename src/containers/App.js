@@ -26,6 +26,8 @@ import UserInfo from './Patient/UserInfo';
 import RecoverPassword from './Patient/RecoverPassword';
 import VerifyEmailPassword from './Patient/VerifyEmailPassword';
 import PaymentReturn from './Patient/PaymentReturn';
+import BookingList from './Patient/Booking/BookingList';
+import ChangePassword from './Auth/ChangePassword';
 
 class App extends Component {
 
@@ -59,10 +61,12 @@ class App extends Component {
                                     <Route path={path.HOME} exact component={(Home)} />
                                     <Route path={path.LOGIN} component={userIsNotAuthenticated(Login)} />
                                     <Route path={path.REGISTER} component={Register} />
+                                    <Route path={path.CHANGE_PASSWORD} component={ChangePassword} />
                                     <Route path={path.RECOVER_PASSWORD} component={RecoverPassword} />
                                     <Route path={path.SYSTEM} component={userIsAuthenticated(System)} />
                                     <Route path={'/doctor/'} component={userIsAuthenticated(Doctor)} />
                                     <Route path={path.USER_INFO} component={UserInfo} />
+                                    <Route path={path.BOOKING_LIST} component={BookingList} />
 
                                     <Route path={path.HOMEPAGE} component={HomePage} />
                                     <Route path={path.DETAIL_DOCTOR} component={DetailDoctor} />
@@ -74,7 +78,7 @@ class App extends Component {
 
                                     <Route path={path.VERIFY_EMAIL_BOOKING} component={VerifyEmail} />
                                     <Route path={path.VERIFY_EMAIL_PASSWORD} component={VerifyEmailPassword} />
-                                    <Route path={path.PAYMENT_RETURN} component={PaymentReturn} />
+                                    <Route path={path.PAYMENT_INFO} component={PaymentReturn} />
 
                                 </Switch>
                             </CustomScrollbars>

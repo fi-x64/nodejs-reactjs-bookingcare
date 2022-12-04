@@ -95,14 +95,14 @@ class ManagePatient extends Component {
             this.setState({
                 isShowLoading: false,
             })
-            toast.success("Send Remedy success");
+            toast.success("Xác nhận đã khám thành công");
             this.closeRemedyModal();
             await this.getDataPatient();
         } else {
             this.setState({
                 isShowLoading: false,
             })
-            toast.error("Something went wrong...")
+            toast.error("Có lỗi xảy ra, chưa xác nhận được")
         }
     }
 

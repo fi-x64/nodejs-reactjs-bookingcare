@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import queryString from "query-string";
 import './PaymentReturn.scss';
 import { FormattedMessage } from 'react-intl';
 import HomeHeader from '../HomePage/HomeHeader';
 import HomeFooter from '../HomePage/HomeFooter';
+import { handlePaymentReturn } from '../../services/userService';
+import { toast } from 'react-toastify';
 
 class PaymentReturn extends Component {
     constructor(props) {
@@ -13,12 +14,18 @@ class PaymentReturn extends Component {
         }
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         const urlSearchParams = new URLSearchParams(window.location.search);
         const query = Object.fromEntries(urlSearchParams.entries());
         this.setState({
             query: query,
         })
+        let paymentReturn = await handlePaymentReturn(query);
+        if (paymentReturn && paymentReturn.errCode === 0) {
+            toast.success("Đã xác nhận thanh toán thành công");
+        } else {
+            toast.error("Xác nhận thánh toán chưa thành công");
+        }
     }
 
     componentWillUnmount() {

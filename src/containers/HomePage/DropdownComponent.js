@@ -49,8 +49,9 @@ class DropdownComponent extends Component {
                 </a>
 
                 {isOpen ? <div className="dropdown-list" aria-labelledby="dropdownMenuLink">
-                    <a className="dropdown-item" href="/user-info/">Thông tin tài khoản</a>
-                    <a className="dropdown-item" href="#">Đổi mật khẩu</a>
+                    <a className="dropdown-item" href="/user-info">Thông tin tài khoản</a>
+                    <a className="dropdown-item" href="/booking-user-list">Lịch khám đã đặt</a>
+                    <a className="dropdown-item" href="/change-password">Đổi mật khẩu</a>
                     <a className="dropdown-item" href="#" onClick={processLogout}>Đăng xuất</a>
                     {userInfo.roleId === 'R1' ? <a className="dropdown-item" href="/system/user-manage">Chuyển sang trang Admin</a> : null}
                     {userInfo.roleId === 'R2' ? <a className="dropdown-item" href="/system/user-manage">Chuyển sang trang Quản lý bác sĩ</a> : null}

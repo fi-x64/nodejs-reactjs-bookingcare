@@ -11,6 +11,7 @@ import { gapi } from 'gapi-script';
 import { googleKeys } from '../../utils/keys';
 import HomeHeader from '../HomePage/HomeHeader';
 import HomeFooter from '../HomePage/HomeFooter';
+import { regexList } from '../../utils/regex';
 
 class Login extends Component {
     constructor(props) {
@@ -20,15 +21,25 @@ class Login extends Component {
             password: '',
             isShowPassword: false,
             errMessage: '',
+            errUsername: '',
+            errPassword: '',
         }
     }
 
     clientId = '33837392563-1pujuhbnqf9enc95nb7hotlg9qhr81jj.apps.googleusercontent.com'
 
     handleOnChangeUsername = (event) => {
-        this.setState({
-            username: event.target.value,
-        })
+        if (!regexList['email'].test(event.target.value)) {
+            this.setState({
+                username: event.target.value,
+                errUsername: 'Email not match'
+            })
+        } else {
+            this.setState({
+                username: event.target.value,
+                errUsername: '',
+            })
+        }
     }
 
     handleOnChangePassword = (event) => {
@@ -141,6 +152,9 @@ class Login extends Component {
                                     value={this.state.username}
                                     onChange={(event) => this.handleOnChangeUsername(event)}
                                     onKeyDown={(event) => this.handleKeyDown(event)} />
+                            </div>
+                            <div className='col-12' style={{ color: 'red' }}>
+                                {this.state.errUsername}
                             </div>
                             <div className='col-12 form-group login-input'>
                                 <label>Password:</label>
