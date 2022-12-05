@@ -14,8 +14,8 @@ const handleRegisterApi = (data) => {
 }
 
 const getAllUsers = (inputId) => {
-    console.log("Check authHeader: ", authHeader());
-    return axios.get(`/api/get-all-users?id=${inputId}`), { headers: authHeader() };
+    // return axios.get(`/api/get-all-users?id=${inputId}`), { headers: authHeader() };
+    return axios.get(`/api/get-all-users?id=${inputId}`);
 }
 
 const createNewUserService = (data) => {
