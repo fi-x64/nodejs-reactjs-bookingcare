@@ -55,4 +55,11 @@
 .comment-item-name {
     font-size  : 16px;
     font-weight: 600;
+    display    : flex;
+
+    .date {
+        font-size  : 15px;
+        margin-left: 10px;
+        opacity    : 0.8;
+    }
 }

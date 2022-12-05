@@ -1,5 +1,6 @@
 import axios from '../axios'
 import authHeader from './auth-header';
+
 const handleLoginApi = (userEmail, userPassword) => {
     return axios.post('/api/login', { email: userEmail, password: userPassword })
 }
@@ -13,7 +14,8 @@ const handleRegisterApi = (data) => {
 }
 
 const getAllUsers = (inputId) => {
-    return axios.get(`/api/get-all-users?id=${inputId}`);
+    console.log("Check authHeader: ", authHeader());
+    return axios.get(`/api/get-all-users?id=${inputId}`), { headers: authHeader() };
 }
 
 const createNewUserService = (data) => {

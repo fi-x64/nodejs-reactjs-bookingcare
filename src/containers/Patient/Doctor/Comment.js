@@ -17,6 +17,7 @@ class Comment extends Component {
             hasCancelButton: false,
             comments: [],
             content: '',
+            userInfo: '',
         }
     }
 
@@ -29,12 +30,15 @@ class Comment extends Component {
                 doctorId: this.props.doctorIdFromParent,
             })
         }
-        let resCheck = await checkUserComment(this.props.doctorIdFromParent, this.props.userInfo.id);
 
-        if (resCheck && resCheck.errCode === 0) {
-            this.setState({
-                isTextareaDisabled: false,
-            })
+        if (this.props.isLoggedIn) {
+            let resCheck = await checkUserComment(this.props.doctorIdFromParent, this.props.userInfo.id);
+
+            if (resCheck && resCheck.errCode === 0) {
+                this.setState({
+                    isTextareaDisabled: false,
+                })
+            }
         }
     }
 
@@ -48,13 +52,14 @@ class Comment extends Component {
                     doctorId: this.props.doctorIdFromParent,
                 })
             }
+            if (this.props.isLoggedIn) {
+                let resCheck = await checkUserComment(this.props.doctorIdFromParent, this.props.userInfo.id);
 
-            let resCheck = await checkUserComment(this.props.doctorIdFromParent, this.props.userInfo.id);
-
-            if (resCheck && resCheck.errCode === 0) {
-                this.setState({
-                    isTextareaDisabled: false,
-                })
+                if (resCheck && resCheck.errCode === 0) {
+                    this.setState({
+                        isTextareaDisabled: false,
+                    })
+                }
             }
         }
 
@@ -115,7 +120,7 @@ class Comment extends Component {
     render() {
         let { isTextareaDisabled, hasCancelButton, comments } = this.state;
         if (!this.props.doctorIdFromParent) return (<p>Loading...</p>)
-
+        console.log("Check comment: ", comments);
         // JSX
         return (
             <div>
@@ -135,17 +140,17 @@ class Comment extends Component {
                     </button>
 
                     <div className="list-group">
-                        {comments && comments.map((item, index) => {
+                        {comments ? comments.map((item, index) => {
                             return (
                                 <div href="#" className="list-group-item list-group-item-action flex-column align-items-start" key={index}>
                                     <div className="d-flex w-100 justify-content-between">
-                                        <h5 className="mb-1 comment-item-name">{item.patientDataComment.lastName ? item.patientDataComment.lastName : "" + " " + item.patientDataComment.firstName ? item.patientDataComment.firstName : ""}</h5>
-                                        {item.patientDataComment.id === this.props.userInfo.id ? <button className='btn btn-danger' onClick={() => this.handleDeleteComment(item.id)}>Xoá</button> : null}
+                                        <h5 className="mb-1 comment-item-name">{item.patientDataComment.lastName ? item.patientDataComment.lastName : "" + " " + item.patientDataComment.firstName ? item.patientDataComment.firstName : ""} <h5 className='date'>{moment(item.date, "'YYYYMMDDHHmmss'").format("DD-MM-YYYY")}</h5></h5>
+                                        {this.props.isLoggedIn && item.patientDataComment.id === this.props.userInfo.id ? <button className='btn btn-danger' onClick={() => this.handleDeleteComment(item.id)}>Xoá</button> : null}
                                     </div>
                                     <p className="mb-1">{item.content}</p>
                                 </div>
                             )
-                        })}
+                        }) : ""}
                     </div>
 
                 </div>
@@ -159,6 +164,7 @@ const mapStateToProps = state => {
     return {
         language: state.app.language,
         userInfo: state.user.userInfo,
+        isLoggedIn: state.user.isLoggedIn,
     };
 };
 

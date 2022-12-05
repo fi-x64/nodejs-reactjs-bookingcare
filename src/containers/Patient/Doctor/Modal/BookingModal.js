@@ -93,7 +93,6 @@ class BookingModal extends Component {
                 this.setState({
                     extraInfor: res.data
                 })
-            console.log("Check extraInfor: ", this.state.extraInfor);
         }
     }
 
