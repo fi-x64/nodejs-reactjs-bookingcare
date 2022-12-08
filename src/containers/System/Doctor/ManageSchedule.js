@@ -19,6 +19,9 @@ class ManageSchedule extends Component {
             selectedDoctor: {},
             currentDate: '',
             rangeTime: [],
+            quantity: '',
+
+            errQuantity: '',
         }
     }
 
@@ -84,6 +87,19 @@ class ManageSchedule extends Component {
         })
     }
 
+    handleOnChangeQuantity = (event) => {
+        if (!isNaN(event.target.value)) {
+            this.setState({
+                quantity: event.target.value,
+                errQuantity: '',
+            })
+        } else {
+            this.setState({
+                errQuantity: 'Số lượng không hợp lệ',
+            })
+        }
+    }
+
     handleClickButtonTime = (time) => {
         let { rangeTime } = this.state;
         if (rangeTime && rangeTime.length > 0) {
@@ -110,6 +126,11 @@ class ManageSchedule extends Component {
             return;
         }
 
+        if (!this.state.quantity) {
+            toast.error("Số lượng không hợp lệ");
+            return;
+        }
+
         let formattedDate = new Date(currentDate).getTime();
 
         if (rangeTime && rangeTime.length > 0) {
@@ -129,7 +150,8 @@ class ManageSchedule extends Component {
             let res = await saveBulkScheduleDoctor({
                 arrSchedule: result,
                 doctorId: selectedDoctor.value,
-                formattedDate: formattedDate
+                formattedDate: formattedDate,
+                maxNumber: this.state.quantity,
             });
             console.log('Check res: ', res);
             if (res.errCode === 0) {
@@ -157,7 +179,7 @@ class ManageSchedule extends Component {
                                 options={this.state.listDoctors}
                             />
                         </div>
-                        <div className='col-6'>
+                        <div className='col-3'>
                             <label><FormattedMessage id="manage-schedule.choose-date" /></label>
                             <DatePicker
                                 onChange={this.handleOnChangeDatePicker}
@@ -165,6 +187,16 @@ class ManageSchedule extends Component {
                                 selected={this.state.currentDate}
                                 minDate={new Date().setHours(0, 0, 0, 0)}
                             />
+                        </div>
+                        <div className='col-3 form-group login-input'>
+                            <label>Số lượng bệnh nhân nhận khám:</label>
+                            <input type='text'
+                                className='form-control'
+                                value={this.state.username}
+                                onChange={(event) => this.handleOnChangeQuantity(event)} />
+                            <div className='col-12' style={{ color: 'red' }}>
+                                {this.state.errQuantity}
+                            </div>
                         </div>
                         <div className='col-12 pick-hour-container'>
                             {rangeTime && rangeTime.length > 0 && rangeTime.map((item, index) => {

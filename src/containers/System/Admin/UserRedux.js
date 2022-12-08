@@ -214,12 +214,11 @@ class UserRedux extends Component {
         return (
             <div className='user-redux-container'>
                 <div className='title'>
-                    <div className="text-center" >User Redux</div>
+                    <div className="text-center" ><FormattedMessage id="manage-user.crud" /></div>
                 </div>
                 <div className='user-redux-body'>
                     <div className='container'>
                         <div className="row g-3">
-                            <div className="col-12 my-3"><FormattedMessage id="manage-user.add" /></div>
                             <div className="col-12 my-3">{isGetGenders === true ? 'Loading genders' : ''}</div>
 
                             <div className="col-md-6">

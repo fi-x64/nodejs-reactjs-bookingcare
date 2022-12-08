@@ -38,6 +38,7 @@ class BookingModal extends Component {
             extraInfor: '',
             selectedBank: '',
             notShowChooseBank: true,
+            quantity: '',
         }
     }
 
@@ -61,7 +62,8 @@ class BookingModal extends Component {
         let res = await getExtraInforDoctorById(this.props.dataTime.doctorId);
         if (res && res.errCode === 0)
             this.setState({
-                extraInfor: res.data
+                extraInfor: res.data,
+                quantity: this.props.dataTime.currentNumber ? this.props.dataTime.maxNumber - this.props.dataTime.currentNumber : this.props.dataTime.maxNumber,
             })
     }
 
@@ -80,9 +82,11 @@ class BookingModal extends Component {
             if (this.props.dataTime && !_.isEmpty(this.props.dataTime)) {
                 let doctorId = this.props.dataTime.doctorId;
                 let timeType = this.props.dataTime.timeType;
+                let quantity = this.props.dataTime.currentNumber ? this.props.dataTime.maxNumber - this.props.dataTime.currentNumber : this.props.dataTime.maxNumber;
                 this.setState({
                     doctorId: doctorId,
                     timeType: timeType,
+                    quantity: quantity,
                 })
             }
         }
@@ -216,7 +220,7 @@ class BookingModal extends Component {
 
     render() {
         let { isOpenModal, closeBookingModal, dataTime } = this.props;
-        let { extraInfor } = this.state;
+        let { extraInfor, quantity } = this.state;
         let doctorId = '';
         if (dataTime && !_.isEmpty(dataTime)) {
             doctorId = dataTime.doctorId;
@@ -250,6 +254,7 @@ class BookingModal extends Component {
                                 />
                             </div>
                             <div className='row'>
+                                <h6 className='quantity'>Số lượng đặt khám còn lại: {quantity}</h6>
                                 <div className='col-6 form-group'>
                                     <label><FormattedMessage id="patient.booking-modal.firstName" /></label>
                                     <input className='form-control'
@@ -355,10 +360,11 @@ class BookingModal extends Component {
                                     </select>
                                 </div>
                             </div>
+                            {quantity === 0 ? <h5 className='alert'>Số lượng đặt đã đủ, vui lòng chọn thời gian khác</h5> : null}
                         </div>
                         <div className='booking-modal-footer'>
                             <button className='btn-booking-cancel' onClick={closeBookingModal}><FormattedMessage id="patient.booking-modal.btnCancel" /></button>
-                            <button className='btn-booking-confirm' onClick={() => this.handleConfirmBooking()}><FormattedMessage id="patient.booking-modal.btnConfirm" /></button>
+                            <button className='btn-booking-confirm' onClick={() => this.handleConfirmBooking()} disabled={quantity === 0 ? "true" : ""} ><FormattedMessage id="patient.booking-modal.btnConfirm" /></button>
                         </div>
                     </div>
                 </Modal>

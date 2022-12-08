@@ -22,6 +22,14 @@
         .booking-modal-body {
             padding: 15px;
             height : 100%;
+
+            .quantity {
+                color: red;
+            }
+
+            .alert {
+                color: red;
+            }
         }
 
         .booking-modal-footer {

@@ -31,7 +31,7 @@
             "manage-doctor": "Quản lý bác sĩ",
             "manage-admin": "Quản lý admin",
             "crud": "CRUD user",
-            "crud-redux": "CRUD redux",
+            "crud-redux": "Quản lý người dùng",
             "clinic": "Phòng khám",
             "manage-clinic": "Quản lý phòng khám",
             "specialty": "Chuyên khoa",
@@ -47,6 +47,7 @@
         }
     },
     "manage-user": {
+        "crud": "Quản lý người dùng",
         "add": "Thêm mới người dùng",
         "email": "Email",
         "password": "Mật khẩu",
