@@ -120,7 +120,6 @@ class Comment extends Component {
     render() {
         let { isTextareaDisabled, hasCancelButton, comments } = this.state;
         if (!this.props.doctorIdFromParent) return (<p>Loading...</p>)
-        console.log("Check comment: ", comments);
         // JSX
         return (
             <div>

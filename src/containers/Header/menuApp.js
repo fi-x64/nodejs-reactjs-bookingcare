@@ -39,4 +39,9 @@ export const doctorMenu = [
             { name: 'menu.doctor.manage-patient', link: '/doctor/manage-patient' }
         ],
     },
+    {
+        name: 'menu.admin.statistic', menus: [
+            { name: 'menu.admin.see-statistic', link: '/system/statistic' },
+        ]
+    }
 ];

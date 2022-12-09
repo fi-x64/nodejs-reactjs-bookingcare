@@ -11,7 +11,7 @@ import DatePicker from '../../../../components/Input/DatePicker';
 import * as actions from '../../../../store/actions'
 import { LANGUAGES } from '../../../../utils';
 import Select from 'react-select';
-import { getExtraInforDoctorById, postPatientBookAppointment, getDoctorPayment, processPayment } from '../../../../services/userService';
+import { getExtraInforDoctorById, postPatientBookAppointment, getAllUsers } from '../../../../services/userService';
 import { toast } from "react-toastify";
 import moment from 'moment';
 import Paypal from './PayPalModal';
@@ -58,6 +58,19 @@ class BookingModal extends Component {
 
     async componentDidMount() {
         this.props.getGenders();
+        let { userInfo } = this.props;
+        if (userInfo) {
+            let userData = await getAllUsers(userInfo.id);
+            if (userData) {
+                this.setState({
+                    firstName: userData.users.firstName,
+                    lastName: userData.users.lastName,
+                    phoneNumber: userData.users.phonenumber,
+                    email: userData.users.email,
+                    address: userData.users.address,
+                })
+            }
+        }
 
         let res = await getExtraInforDoctorById(this.props.dataTime.doctorId);
         if (res && res.errCode === 0)
@@ -98,6 +111,22 @@ class BookingModal extends Component {
                     extraInfor: res.data
                 })
         }
+
+        if (this.props.userInfo !== prevProps.userInfo) {
+            let { userInfo } = this.props;
+
+            let userData = await getAllUsers(userInfo.id);
+            if (userData) {
+                this.setState({
+                    firstName: userData.users.firstName,
+                    lastName: userData.users.lastName,
+                    phoneNumber: userData.users.phonenumber,
+                    email: userData.users.email,
+                    address: userData.users.address,
+                })
+            }
+
+        }
     }
 
     handleOnChangeInput = (event, id) => {
@@ -117,6 +146,7 @@ class BookingModal extends Component {
 
     handleChangeSelect = (selectedOption) => {
         this.setState({ selectedGender: selectedOption })
+        console.log("Check selectedGender: ", this.state.selectedGender);
     }
 
     handleChangePaymentSelect = (event) => {
@@ -181,6 +211,7 @@ class BookingModal extends Component {
             address: this.state.address,
             reason: this.state.reason,
             date: this.props.dataTime.date,
+            scheduleId: this.props.dataTime.id,
             birthday: date,
             selectedGender: this.state.selectedGender.value,
             doctorId: this.state.doctorId,
@@ -378,6 +409,7 @@ const mapStateToProps = state => {
         language: state.app.language,
         genders: state.admin.genders,
         allPaymentMethod: state.admin.allPaymentMethod,
+        userInfo: state.user.userInfo,
     };
 };
 

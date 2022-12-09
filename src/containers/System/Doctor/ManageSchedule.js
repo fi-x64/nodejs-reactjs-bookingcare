@@ -21,6 +21,7 @@ class ManageSchedule extends Component {
             rangeTime: [],
             quantity: '',
 
+            isDoctor: false,
             errQuantity: '',
         }
     }
@@ -28,6 +29,21 @@ class ManageSchedule extends Component {
     componentDidMount() {
         this.props.fetchAllDoctorsRedux();
         this.props.fetchAllScheduleTime();
+
+        if (this.props.userInfo.roleId === 'R2') {
+            let { language } = this.props;
+            let object = {};
+            let labelVi = `${this.props.userInfo.lastName} ${this.props.userInfo.firstName}`
+            let labelEn = `${this.props.userInfo.firstName} ${this.props.userInfo.lastName}`
+
+            object.label = language === LANGUAGES.VI ? labelVi : labelEn;
+            object.value = this.props.userInfo.id;
+
+            this.setState({
+                isDoctor: true,
+                selectedDoctor: object
+            })
+        }
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -55,6 +71,22 @@ class ManageSchedule extends Component {
             this.setState({
                 listDoctors: dataSelect
             })
+        }
+
+        if (this.props.userInfo != prevProps.userInfo) {
+            if (this.props.userInfo.roleId === 'R2') {
+                let { language } = this.props;
+                let object = {};
+                let labelVi = `${this.props.userInfo.lastName} ${this.props.userInfo.firstName}`
+                let labelEn = `${this.props.userInfo.firstName} ${this.props.userInfo.lastName}`
+
+                object.label = language === LANGUAGES.VI ? labelVi : labelEn;
+                object.value = this.props.userInfo.id;
+
+                this.setState({
+                    selectedDoctor: object
+                })
+            }
         }
     }
 
@@ -153,7 +185,6 @@ class ManageSchedule extends Component {
                 formattedDate: formattedDate,
                 maxNumber: this.state.quantity,
             });
-            console.log('Check res: ', res);
             if (res.errCode === 0) {
                 toast.success("Schedule saved!");
             }
@@ -162,7 +193,7 @@ class ManageSchedule extends Component {
     }
 
     render() {
-        let { rangeTime } = this.state;
+        let { rangeTime, isDoctor } = this.state;
         let { language } = this.props;
         return (
             <div className='manage-schedule-container'>
@@ -173,11 +204,16 @@ class ManageSchedule extends Component {
                     <div className='row'>
                         <div className='col-6 form-group'>
                             <label><FormattedMessage id="manage-schedule.choose-doctor" /></label>
-                            <Select
-                                value={this.state.selectedDoctor}
-                                onChange={this.handleChangeSelect}
-                                options={this.state.listDoctors}
-                            />
+                            {isDoctor ? <input type='text'
+                                className='form-control'
+                                value={this.state.selectedDoctor.label}
+                                disabled={true} /> :
+                                <Select
+                                    value={this.state.selectedDoctor}
+                                    onChange={this.handleChangeSelect}
+                                    options={this.state.listDoctors}
+                                />
+                            }
                         </div>
                         <div className='col-3'>
                             <label><FormattedMessage id="manage-schedule.choose-date" /></label>
@@ -227,6 +263,7 @@ const mapStateToProps = state => {
         language: state.app.language,
         allDoctors: state.admin.allDoctors,
         allScheduleTime: state.admin.allScheduleTime,
+        userInfo: state.user.userInfo,
     };
 };
 

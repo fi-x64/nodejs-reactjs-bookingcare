@@ -19,9 +19,11 @@ class VerifyEmail extends Component {
             let urlParams = new URLSearchParams(this.props.location.search);
             let token = urlParams.get('token');
             let doctorId = urlParams.get('doctorId');
+            let scheduleId = urlParams.get('scheduleId');
             let res = await postVerifyBookAppointment({
                 token: token,
                 doctorId: doctorId,
+                scheduleId: scheduleId,
             })
 
             if (res && res.errCode === 0) {
