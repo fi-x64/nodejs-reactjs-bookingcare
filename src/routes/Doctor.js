@@ -7,16 +7,19 @@ import ManagePatient from '../containers/System/Doctor/ManagePatient';
 
 class Doctor extends Component {
     render() {
-        const { isLoggedIn } = this.props;
+        const { isLoggedIn, userInfo, systemMenuPath } = this.props;
         return (
             <React.Fragment>
                 {isLoggedIn && <Header />}
                 < div className="system-container" >
                     <div className="system-list">
-                        <Switch>
-                            <Route path="/doctor/manage-schedule" component={ManageSchedule} />
-                            <Route path="/doctor/manage-patient" component={ManagePatient} />
-                        </Switch>
+                        {userInfo.roleId === "R1" || userInfo.roleId === "R2" ?
+                            <Switch>
+                                <Route path="/doctor/manage-schedule" component={ManageSchedule} />
+                                <Route path="/doctor/manage-patient" component={ManagePatient} />
+                            </Switch> : <Route component={() => { return (<Redirect to={systemMenuPath} />) }} />
+                        }
+
                     </div>
                 </ div>
             </React.Fragment>
@@ -27,7 +30,8 @@ class Doctor extends Component {
 const mapStateToProps = state => {
     return {
         systemMenuPath: state.app.systemMenuPath,
-        isLoggedIn: state.user.isLoggedIn
+        isLoggedIn: state.user.isLoggedIn,
+        userInfo: state.user.userInfo,
     };
 };
 

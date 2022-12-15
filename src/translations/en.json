@@ -27,6 +27,7 @@
     },
     "menu": {
         "admin": {
+            "dashboard": "Home Page Manager",
             "manage-user": "Users System",
             "manage-doctor": "Manage doctors",
             "manage-admin": "Manage admins",
@@ -120,7 +121,7 @@
             "addressClinic": "Clinic's address",
             "note": "Note",
             "specialty": "Specialty",
-            "select-clinic": "Choose clinic"
+            "select-doctor-hospital": "Choose doctor's hospital"
         }
     }
 }

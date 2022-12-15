@@ -102,7 +102,7 @@ class ManageClinic extends Component {
                     </div>
                     <div className='col-12'>
                         <button className='btn-save-specialty'
-                            onClick={() => this.handleSaveNewSpecialty()}>Save</button>
+                            onClick={() => this.handleSaveNewSpecialty()}>Tạo phòng khám</button>
                     </div>
                 </div>
             </div>

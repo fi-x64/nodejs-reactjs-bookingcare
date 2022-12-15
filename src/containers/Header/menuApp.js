@@ -1,5 +1,10 @@
 export const adminMenu = [
     { //quản lý người dùng
+        name: 'menu.admin.dashboard', menus: [
+            { name: 'menu.admin.dashboard', link: '/system/dashboard' },
+        ]
+    },
+    { //quản lý người dùng
         name: 'menu.admin.manage-user', menus: [
             // { name: 'menu.admin.crud', link: '/system/user-manage' },
             { name: 'menu.admin.crud-redux', link: '/system/user-redux' },
@@ -18,11 +23,6 @@ export const adminMenu = [
             { name: 'menu.admin.manage-specialty', link: '/system/manage-specialty' },
         ]
     },
-    { //quản lý cẩm nang
-        name: 'menu.admin.handbook', menus: [
-            { name: 'menu.admin.manage-handbook', link: '/system/manage-handbook' },
-        ]
-    },
     {
         name: 'menu.admin.statistic', menus: [
             { name: 'menu.admin.see-statistic', link: '/system/statistic' },
@@ -31,6 +31,11 @@ export const adminMenu = [
 ];
 
 export const doctorMenu = [
+    { //quản lý người dùng
+        name: 'menu.admin.dashboard', menus: [
+            { name: 'menu.admin.dashboard', link: '/system/dashboard' },
+        ]
+    },
     { //quản lý người dùng
         name: 'menu.admin.manage-user', menus: [
             {

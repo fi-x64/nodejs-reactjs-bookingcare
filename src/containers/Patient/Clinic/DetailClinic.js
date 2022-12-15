@@ -28,8 +28,6 @@ class DetailClinic extends Component {
                 id: id,
             });
 
-            console.log('Check res: ', res);
-
             if (res && res.errCode == 0) {
                 let data = res.data;
                 let arrDoctorId = [];
@@ -56,7 +54,6 @@ class DetailClinic extends Component {
 
     render() {
         let { arrDoctorId, dataDetailClinic } = this.state;
-        console.log('Check state: ', this.state);
         let { language } = this.props;
 
         return (

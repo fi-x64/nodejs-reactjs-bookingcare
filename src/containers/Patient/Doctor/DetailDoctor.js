@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import HomeHeader from '../../HomePage/HomeHeader';
 import './DetailDoctor.scss'
 import { LANGUAGES } from '../../../utils'
-import { getDetailInforDoctor } from '../../../services/userService'
+import { getDetailInforDoctor, getDetailClinicById } from '../../../services/userService'
 import DoctorSchedule from './DoctorSchedule';
 import DoctorExtraInfor from './DoctorExtraInfor';
 import LikeAndShare from '../SocialPlugin/LikeAndShare';
@@ -16,6 +16,7 @@ class DetailDoctor extends Component {
             detailDoctor: {},
             currentDoctorId: -1,
             user: '',
+            clinicInfo: '',
         }
     }
 
@@ -35,8 +36,18 @@ class DetailDoctor extends Component {
                 this.setState({
                     detailDoctor: res.data
                 })
-            } else {
 
+                if (res.data.Doctor_Infor.clinicId) {
+                    let clinicInfo = await getDetailClinicById({
+                        id: res.data.Doctor_Infor.clinicId
+                    })
+
+                    if (clinicInfo && clinicInfo.errCode == 0) {
+                        this.setState({
+                            clinicInfo: clinicInfo.data,
+                        })
+                    }
+                }
             }
         }
     }
@@ -48,13 +59,13 @@ class DetailDoctor extends Component {
     render() {
         let { language } = this.props;
 
-        let { detailDoctor } = this.state;
+        let { detailDoctor, clinicInfo } = this.state;
         let nameVi = '', nameEn = '';
         if (detailDoctor && detailDoctor.positionData) {
             nameVi = `${detailDoctor.positionData.valueVi}, ${detailDoctor.lastName} ${detailDoctor.firstName}`
             nameEn = `${detailDoctor.positionData.valueEn}, ${detailDoctor.firstName} ${detailDoctor.lastName}`
         }
-
+        console.log("Check clinicInfor: ", clinicInfo);
         let currentURL = process.env.REACT_APP_IS_LOCALHOST === 1 ?
             "https://developers.facebook.com/docs/plugins/comments#configurator" : window.location.href;
         return (
@@ -87,6 +98,7 @@ class DetailDoctor extends Component {
                         <div className='content-left'>
                             <DoctorSchedule
                                 doctorIdFromParent={detailDoctor && detailDoctor.id ? detailDoctor.id : -1}
+                                clinicInfoFromParent={clinicInfo ? clinicInfo : null}
                             />
                         </div>
                         <div className='content-right'>

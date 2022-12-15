@@ -7,6 +7,8 @@ import './UserRedux.scss';
 import Lightbox from 'react-image-lightbox';
 import 'react-image-lightbox/style.css';
 import TableManageUser from './TableManageUser';
+import { toast } from 'react-toastify';
+import { regexList } from '../../../utils/regex';
 class UserRedux extends Component {
 
     constructor(props) {
@@ -160,8 +162,32 @@ class UserRedux extends Component {
         for (let i = 0; i < arrCheck.length - 1; i++) {
             if (!this.state[arrCheck[i]]) {
                 isValid = false;
-                alert('This input is required: ' + arrCheck[i]);
+                toast.error("Trường " + arrCheck[i] + " bắt buộc phải nhập");
                 break;
+            } else {
+                if (arrCheck[i] === 'email') {
+                    if (!regexList['email'].test(this.state[arrCheck[i]])) {
+                        isValid = false;
+                        toast.error("Email không đúng định dạng");
+                        break;
+                    }
+                }
+
+                if (arrCheck[i] === 'password') {
+                    if (!regexList['password'].test(this.state[arrCheck[i]])) {
+                        isValid = false;
+                        toast.error("Mật khẩu ít nhất 8 ký tự bao gồm ít nhất 1 ký tự viết hoa và 1 ký tự đặc biệt");
+                        break;
+                    }
+                }
+
+                if (arrCheck[i] === 'phonenumber') {
+                    if (!regexList['phonenumberVi'].test(this.state[arrCheck[i]])) {
+                        isValid = false;
+                        toast.error("Số điện thoại không đúng định dạng");
+                        break;
+                    }
+                }
             }
         }
 

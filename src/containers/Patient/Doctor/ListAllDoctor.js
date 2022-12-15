@@ -28,7 +28,6 @@ class ListAllDoctor extends Component {
         } else {
 
         }
-        console.log('Check res: ', res);
     }
 
     componentDidUpdate(prevProps, nextState, snapshot) {

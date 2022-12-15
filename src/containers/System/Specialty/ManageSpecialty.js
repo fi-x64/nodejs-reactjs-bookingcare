@@ -86,7 +86,7 @@ class ManageSpecialty extends Component {
                         <input className='d-block form-control-file' type='file'
                             onChange={(event) => this.handleOnChangeImage(event)} />
                     </div>
-                    <div className='col-12'>
+                    <div className='col-12 markdown'>
                         <MdEditor
                             style={{ height: '300px' }}
                             renderHTML={text => mdParser.render(text)}
@@ -95,7 +95,7 @@ class ManageSpecialty extends Component {
                     </div>
                     <div className='col-12'>
                         <button className='btn-save-specialty'
-                            onClick={() => this.handleSaveNewSpecialty()}>Save</button>
+                            onClick={() => this.handleSaveNewSpecialty()}>Tạo chuyên khoa</button>
                     </div>
                 </div>
             </div>

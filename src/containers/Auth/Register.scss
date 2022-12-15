@@ -3,20 +3,20 @@
     background: linear-gradient(135deg, rgba(34, 193, 195, 1) 0%, rgba(253, 187, 45, 1) 100%);
 
     .login-container {
-        position        : absolute;
-        max-height      : 800px;
-        width           : 40%;
-        height          : 100%;
-        margin          : auto;
-        border-radius   : 10px;
-        background-color: white;
-        top             : 0;
-        bottom          : 0;
-        left            : 0;
-        right           : 0;
+        position                 : absolute;
+        max-height               : 700vh !important;
+        width                    : 40%;
+        height                   : 52% !important;
+        margin                   : auto;
+        border-radius            : 10px;
+        background-color         : white;
+        // top                   : 0;
+        // bottom                : 0;
+        // left                  : 0;
+        // right                 : 0;
 
         .login-content {
-            padding: 10px;
+            padding: 20px;
 
             .text-login {
                 text-align : center;

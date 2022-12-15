@@ -360,12 +360,12 @@ class ManageDoctor extends Component {
                             name="selectedSpecialty" />
                     </div>
                     <div className='col-4 form-group'>
-                        <label><FormattedMessage id="admin.manage-doctor.select-clinic" /></label>
+                        <label><FormattedMessage id="admin.manage-doctor.select-doctor-hospital" /></label>
                         <Select
                             value={this.state.selectedClinic}
                             onChange={this.handleChangeSelectDoctorInfor}
                             options={this.state.listClinic}
-                            placeholder={<FormattedMessage id="admin.manage-doctor.select-clinic" />}
+                            placeholder={<FormattedMessage id="admin.manage-doctor.select-doctor-hospital" />}
                             name="selectedClinic" />
                     </div>
                 </div>

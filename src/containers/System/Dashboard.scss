@@ -1,0 +1,32 @@
+.dashboard-container {
+    display        : flex;
+    align-items    : center;
+    justify-content: space-around;
+    height         : 100%;
+    transform      : translateY(70%);
+
+    .modal-container {
+        width          : 400px;
+        height         : 211px;
+        border         : 1px solid #dddcdc;
+        border-radius  : 12px;
+        align-items    : center;
+        justify-content: center;
+        text-align     : center;
+
+        .modal-title {
+            font-size    : 25px;
+            font-weight  : 600;
+            margin-bottom: 10px;
+        }
+
+        .modal-sum {
+            font-size  : 25px;
+            font-weight: 600;
+        }
+
+        .modal-icon {
+            font-size: 50px;
+        }
+    }
+}

@@ -157,7 +157,6 @@ const handleDeleteComment = (comentId) => {
 }
 
 const getDoctorPayment = (doctorId) => {
-    console.log("Check doctorId: ", doctorId);
     return axios.get(`/api/get-doctor-payment?doctorId=${doctorId}`);
 }
 

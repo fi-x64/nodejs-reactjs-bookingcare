@@ -43,7 +43,7 @@ class RecoverPassword extends Component {
                 isShowLoading: true
             })
             let data = await checkEmail({ email: this.state.email, language: this.props.language });
-            console.log('Check data: ', data);
+
             if (data && data.errCode !== 0) {
                 this.setState({
                     errMessage: data.message

@@ -27,6 +27,7 @@
     },
     "menu": {
         "admin": {
+            "dashboard": "Trang chủ Quản lý",
             "manage-user": "Người dùng",
             "manage-doctor": "Quản lý bác sĩ",
             "manage-admin": "Quản lý admin",
@@ -120,7 +121,7 @@
             "addressClinic": "Địa chỉ phòng khám",
             "note": "Ghi chú",
             "specialty": "Chọn chuyên khoa",
-            "select-clinic": "Chọn phòng khám"
+            "select-doctor-hospital": "Chọn bệnh viện bác sĩ làm việc"
         }
     }
 }

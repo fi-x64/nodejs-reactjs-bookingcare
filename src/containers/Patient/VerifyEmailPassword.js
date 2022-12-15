@@ -28,7 +28,6 @@ class VerifyEmailPassword extends Component {
                 token: token,
                 userId: userId,
             })
-            console.log("Check res: ", res);
 
             if (res && res.errCode === 0) {
                 this.setState({
@@ -82,7 +81,7 @@ class VerifyEmailPassword extends Component {
                     userId: userId,
                     password: password,
                 });
-                console.log("Check data: ".data);
+
                 if (data && data.errCode !== 0) {
                     this.setState({
                         errMessage: data.message

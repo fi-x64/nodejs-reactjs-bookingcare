@@ -15,7 +15,8 @@ class DoctorSchedule extends Component {
             allDays: [],
             allAvailableTime: [],
             isOpenModalBooking: false,
-            dataScheduleTimeModal: {}
+            dataScheduleTimeModal: {},
+            clinicInfo: {},
         }
     }
 
@@ -27,6 +28,12 @@ class DoctorSchedule extends Component {
             let res = await getScheduleDoctorByDate(this.props.doctorIdFromParent, allDays[0].value);
             this.setState({
                 allAvailableTime: res.data ? res.data : []
+            })
+        }
+
+        if (this.props.clinicInforFromParent) {
+            this.setState({
+                clinicInfo: this.props.clinicInforFromParent,
             })
         }
 
@@ -84,6 +91,12 @@ class DoctorSchedule extends Component {
                 allAvailableTime: res.data ? res.data : []
             })
         }
+
+        if (this.props.clinicInfoFromParent !== prevProps.clinicInfoFromParent) {
+            this.setState({
+                clinicInfo: this.props.clinicInfoFromParent,
+            })
+        }
     }
 
     handleOnChangeSelect = async (event) => {
@@ -114,7 +127,7 @@ class DoctorSchedule extends Component {
     }
 
     render() {
-        let { allDays, allAvailableTime, isOpenModalBooking, dataScheduleTimeModal } = this.state;
+        let { allDays, allAvailableTime, isOpenModalBooking, dataScheduleTimeModal, clinicInfo } = this.state;
         let { language } = this.props;
 
         return (
@@ -157,6 +170,9 @@ class DoctorSchedule extends Component {
                                 </React.Fragment>
                                 : <div className='no-schedule'><FormattedMessage id="patient.detail-doctor.no-schedule" /></div>
                             }
+                            {clinicInfo && clinicInfo.name ?
+                                <div>Bác sĩ có làm việc tại {clinicInfo.name} địa chỉ {clinicInfo.address}. Nếu khám ở bệnh viện, vui lòng liên hệ với bệnh viện để biết lịch khám</div>
+                                : null}
                         </div>
                     </div>
                 </div>

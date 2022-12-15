@@ -91,8 +91,8 @@ class BookingList extends Component {
                                                 <td>{item.patientData.lastName ? item.patientData.lastName : "" + " " + item.patientData.firstName ? item.patientData.firstName : ""}</td>
                                                 <td>{t ? t : null}</td>
                                                 <td>{item.statusId === "S2" ? 'Chưa khám xong' : item.statusId === "S3" ? 'Đã khám xong' : "Chưa xác nhận"}</td>
-                                                <td>{item.Checkout.paymentStatus ? 'Đã thanh toán' : "Chưa thanh toán"}</td>
-                                                <td>{item.Checkout.paymentMethod === "cash" ? "Tiền mặt" : item.Checkout.paymentMethod}</td>
+                                                <td>{item?.Checkout?.paymentStatus ? 'Đã thanh toán' : "Chưa thanh toán"}</td>
+                                                <td>{item?.Checkout?.paymentMethod === "cash" ? "Tiền mặt" : item.Checkout?.paymentMethod}</td>
                                             </tr>
                                         )
                                     })

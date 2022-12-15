@@ -140,7 +140,7 @@ class Login extends Component {
                         errMessage: data.message
                     })
                 };
-                console.log('Check data: ', data);
+
                 if (data && data.errCode === 0) {
                     toast.success("Tạo tài khoản thành công. Vui lòng đăng nhập với tài khoản vừa tạo");
                     this.redirectToLoginPage();
@@ -252,15 +252,8 @@ class Login extends Component {
                             <div className='col-12' style={{ color: 'red' }}>
                                 {this.state.errMessage}
                             </div>
-                            <div className='col-12'>
+                            <div className='col-12 form-group'>
                                 <button className='btn-login' onClick={() => { this.handleRegister() }}>Register</button>
-                            </div>
-                            <span className='text-center'>Or Login with:</span>
-                            <div className='col-12'>
-                                <div className='col-12 social-login'>
-                                    <i className="fab fa-google google"></i>
-                                    <i className="fab fa-facebook-f facebook"></i>
-                                </div>
                             </div>
                         </div>
                     </div >

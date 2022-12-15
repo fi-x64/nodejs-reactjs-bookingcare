@@ -6,7 +6,7 @@ import './BookingModal.scss';
 import { Modal } from 'reactstrap';
 import ProfileDoctor from '../ProfileDoctor';
 import { } from '../../../../services/userService';
-import _ from 'lodash';
+import _, { forEach } from 'lodash';
 import DatePicker from '../../../../components/Input/DatePicker';
 import * as actions from '../../../../store/actions'
 import { LANGUAGES } from '../../../../utils';
@@ -16,6 +16,7 @@ import { toast } from "react-toastify";
 import moment from 'moment';
 import Paypal from './PayPalModal';
 import LoadingOverlay from 'react-loading-overlay';
+import { regexList } from '../../../../utils/regex';
 
 class BookingModal extends Component {
     constructor(props) {
@@ -39,6 +40,9 @@ class BookingModal extends Component {
             selectedBank: '',
             notShowChooseBank: true,
             quantity: '',
+
+            errPhoneNumber: '',
+            errEmail: '',
         }
     }
 
@@ -131,11 +135,36 @@ class BookingModal extends Component {
 
     handleOnChangeInput = (event, id) => {
         let valueInput = event.target.value;
+        let errPhoneNumber = '';
+        let errEmail = '';
+        if (id == "phoneNumber") {
+            if (!valueInput) {
+                errPhoneNumber = 'Vui lòng nhập số điện thoại';
+            } else if (!regexList["phonenumberVi"].test(valueInput)) {
+                errPhoneNumber = 'Số điện thoại không hợp lệ';
+            }
+        }
+
+        if (id == "email") {
+
+            if (!valueInput) {
+                errEmail = 'Không được để trống Email';
+            } else if (!regexList["email"].test(valueInput)) {
+                errEmail = 'Email không hợp lệ'
+
+            }
+        }
+
+
         let stateCopy = { ...this.state };
         stateCopy[id] = valueInput;
         this.setState({
             ...stateCopy,
+            errEmail: errEmail,
+            errPhoneNumber: errPhoneNumber
         })
+
+
     }
 
     handleOnChaneDatePicker = (date) => {
@@ -146,7 +175,6 @@ class BookingModal extends Component {
 
     handleChangeSelect = (selectedOption) => {
         this.setState({ selectedGender: selectedOption })
-        console.log("Check selectedGender: ", this.state.selectedGender);
     }
 
     handleChangePaymentSelect = (event) => {
@@ -195,57 +223,66 @@ class BookingModal extends Component {
 
     handleConfirmBooking = async () => {
         //validate input
+        let { firstName, lastName, phoneNumber, email, address, reason,
+            birthday, selectedGender,
+            selectedPaymentMethod, errEmail, errPhoneNumber } = this.state;
 
-        this.setState({
-            isShowLoading: true
-        })
-        let date = new Date(this.state.birthday).getTime();
-        let timeString = this.buildTimeBooking(this.props.dataTime);
-        let doctorName = this.buildDoctorName(this.props.dataTime);
-
-        var res = await postPatientBookAppointment({
-            firstName: this.state.firstName,
-            lastName: this.state.lastName,
-            phoneNumber: this.state.phoneNumber,
-            email: this.state.email,
-            address: this.state.address,
-            reason: this.state.reason,
-            date: this.props.dataTime.date,
-            scheduleId: this.props.dataTime.id,
-            birthday: date,
-            selectedGender: this.state.selectedGender.value,
-            doctorId: this.state.doctorId,
-            timeType: this.state.timeType,
-            language: this.props.language,
-            timeString: timeString,
-            doctorName: doctorName,
-            paymentMethod: this.state.selectedPaymentMethod,
-            amount: this.state.extraInfor.priceTypeData.valueVi,
-            bankCode: this.state.selectedBank,
-        })
-        if (res?.dataPayment?.url) {
-            window.location.href = res.dataPayment.url;
-        }
-        this.setState({
-            isShowLoading: true
-        })
-        if (res && res.errCode === 0) {
-            toast.success('Booking a new appointment succeed!');
-
-            if (this.state.selectedPaymentMethod === 'paypal') {
-                this.render(<Paypal />)
-
-            }
-            this.props.closeBookingModal();
-            this.setState({
-                isShowLoading: false
-            })
-
+        if (!firstName || !lastName || !phoneNumber || !email || !address || !reason,
+            !birthday || !selectedGender,
+            !selectedPaymentMethod || errEmail || errPhoneNumber) {
+            toast.error("Vui lòng nhập đầy đủ thông tin");
         } else {
-            toast.error('Booking a new appointment failed!');
             this.setState({
-                isShowLoading: false
+                isShowLoading: true
             })
+            let date = new Date(this.state.birthday).getTime();
+            let timeString = this.buildTimeBooking(this.props.dataTime);
+            let doctorName = this.buildDoctorName(this.props.dataTime);
+            console.log("Check state: ", this.state);
+            var res = await postPatientBookAppointment({
+                firstName: this.state.firstName,
+                lastName: this.state.lastName,
+                phoneNumber: this.state.phoneNumber,
+                email: this.state.email,
+                address: this.state.address,
+                reason: this.state.reason,
+                date: this.props.dataTime.date,
+                scheduleId: this.props.dataTime.id,
+                birthday: date,
+                selectedGender: this.state.selectedGender.value,
+                doctorId: this.state.doctorId,
+                timeType: this.state.timeType,
+                language: this.props.language,
+                timeString: timeString,
+                doctorName: doctorName,
+                paymentMethod: this.state.selectedPaymentMethod,
+                amount: this.state.extraInfor.priceTypeData.valueVi,
+                bankCode: this.state.selectedBank,
+            })
+            if (res?.dataPayment?.url) {
+                window.location.href = res.dataPayment.url;
+            }
+            this.setState({
+                isShowLoading: true
+            })
+            if (res && res.errCode === 0) {
+                toast.success('Booking a new appointment succeed!');
+
+                if (this.state.selectedPaymentMethod === 'paypal') {
+                    this.render(<Paypal />)
+
+                }
+                this.props.closeBookingModal();
+                this.setState({
+                    isShowLoading: false
+                })
+
+            } else {
+                toast.error('Booking a new appointment failed!');
+                this.setState({
+                    isShowLoading: false
+                })
+            }
         }
     }
 
@@ -303,12 +340,18 @@ class BookingModal extends Component {
                                     <input className='form-control'
                                         value={this.state.phoneNumber}
                                         onChange={(event) => this.handleOnChangeInput(event, 'phoneNumber')} />
+                                    <div style={{ color: 'red' }}>
+                                        {this.state.errPhoneNumber}
+                                    </div>
                                 </div>
                                 <div className='col-6 form-group'>
                                     <label><FormattedMessage id="patient.booking-modal.email" /></label>
                                     <input className='form-control'
                                         value={this.state.email}
                                         onChange={(event) => this.handleOnChangeInput(event, 'email')} />
+                                    <div className='col-12' style={{ color: 'red' }}>
+                                        {this.state.errEmail}
+                                    </div>
                                 </div>
                                 <div className='col-6 form-group'>
                                     <label><FormattedMessage id="patient.booking-modal.address" /></label>

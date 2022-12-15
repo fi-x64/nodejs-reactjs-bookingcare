@@ -35,7 +35,7 @@ class PaymentReturn extends Component {
     render() {
         const { lang } = this.props;
         let { query } = this.state;
-        console.log("Check query: ", query);
+
         return (
             <>
                 <HomeHeader />
